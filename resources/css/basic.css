@@ -1,0 +1,115 @@
+
+.form-header {
+    box-shadow: 0 5px 11px 0 rgba(0,0,0,.18), 0 4px 15px 0 rgba(0,0,0,.15);
+    color: #fff;
+    text-align: center;
+    margin-top: -3.13rem;
+    margin-bottom: 3rem;
+    padding: 1rem;
+    border-radius: .125rem;
+}
+
+.info-color {
+    background-color: #33b5e5!important;
+}
+
+.card {
+    font-weight: 400;
+    border: 0;
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,.16), 0 2px 10px 0 rgba(0,0,0,.12);
+}
+.card {
+    position: relative;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: .25em;
+}
+.card.card-login {
+	font-size: 1.2em;
+	margin-top: 10em;
+	width: 100%;
+}
+
+.card.card-login .btn {
+	padding: .4em 1.8em;
+	font-size: 1em;
+	font-weight: 600;
+}
+.card.card-login .md-form {
+    margin-top: 1.5rem !important;
+    margin-bottom: 1.5 !important;
+}
+.card.card-login .md-form .prefix {
+    position: absolute;
+    transition: color .2s;
+}
+.card.card-login .md-form .prefix {
+    top: .25em;
+    font-size: 2.25em;
+}
+.card.card-login .md-form label {
+	transform: translateY(1.5em);
+}
+.card.card-login .md-form label.active {
+    transform: translateY(-14px) scale(.8);
+}
+.card.card-login .form-control {
+	font-size: 1em;
+}
+
+.md-form:not(.mt-4){
+	margin-top: .5em !important;
+    margin-bottom: .5em !important;
+}
+
+.btn {
+	padding: 0;
+	margin: .375em;
+}
+.btn,
+.form-control,
+.md-form label {
+	font-size: 1em;
+}
+.card .md-form label {
+    font-weight: 800;
+}
+.btn.btn-sm {
+    padding: .5em 1.6em;
+    font-size: .7em;
+}
+.form-control-sm,
+.md-form.form-sm label {
+	font-size: .875em;
+}
+.md-form.form-sm label.active {
+	font-size: .95em;
+}
+.md-form label, .md-form label.active {
+	font-size: 1em;
+}
+.md-form label.active {
+	color: #33b5e5;
+}
+
+.pagination .page-item .page-link {
+	font-size: .9em !important;
+}
+.pagination .page-item.active .page-link,
+.pagination .page-item.active .page-link:hover,
+div.dataTables_wrapper div.dataTables_paginate ul.pagination .page-item.active .page-link:focus {
+    background-color: #33b5e5;
+}
+.btn-primary {
+    background-color: #33b5e5!important;
+}
+.btn-primary:not([disabled]):not(.disabled).active, .btn-primary:not([disabled]):not(.disabled):active, .show>.btn-primary.dropdown-toggle {
+    background-color: #14799e!important;
+}
