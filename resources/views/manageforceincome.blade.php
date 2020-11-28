@@ -118,6 +118,14 @@
                         <span class="title">신청자료</span>
                     </a>
                 </li> -->
+                <li class="nav-item">
+                    <a class='sidebar-link' href="{{ url('/logout') }}">
+                        <span class="icon-holder">
+                            <i class="c-deep-red-500 ti-export"></i>
+                        </span>
+                        <span class="title">로그아웃</span>
+                    </a>
+                </li>
             </ul>
         </div>
     </div>
@@ -127,9 +135,18 @@
             <div class="header-container">
                 <ul class="nav-left">
                     <li>
-                        <a id='sidebar-toggle' class="sidebar-toggle" href="javascript:void(0);">
-                            <i class="ti-menu"></i>
-                        </a>
+                        @if(Auth::user()->role_id == 1)
+                        <div class="dropdown-toggle no-after peers fxw-nw ai-c lh-1" style="margin-top: 15px;">
+                            <div class="peer mR-10">
+                                <span class="fsz-sm c-grey-900">그룹명: </span>
+                            </div>
+                            <select id="group_type" name="group_type" class="form-control peer">
+                                @foreach($others as $i=>$type)
+                                <option value="{{ $type->id }}">{{ $type->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        @endif
                     </li>
                 </ul>
                 <ul class="nav-right">
@@ -161,46 +178,40 @@
                     <h4 class="c-grey-900 mT-10 mB-30">발신전환설정(강제수신)</h4>
                     <div class="row">
                         <div class="col-md-4">
-                            <form name="update_income" method="POST" action="{{ route('update_income') }}" enctype="multipart/form-data">
-                                @csrf
-                                <div class="row">
-                                    <div class="col-sm-4 col-md-8">
-                                        <div class="md-form form-group">
-                                            <label for="phone" class="active">수신전화번호</label>
-                                            <input class="form-control" id="phone" name="phone" type="text" value="{{ $phone }}">
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-3 col-md-2">
-                                        <div style="margin: 28px 0">
-                                            <button class="btn btn-info waves-effect waves-light" type="submit" role="button" aria-pressed="true">저장</button>
-                                        </div>
+                            <div class="row">
+                                <div class="col-sm-4 col-md-8">
+                                    <div class="md-form form-group">
+                                        <label for="phone_receive" class="active">수신전화번호</label>
+                                        <input class="form-control" id="phone_receive" name="phone_receive" type="text" value="{{ $phone }}">
                                     </div>
                                 </div>
-                            </form>
+                                <div class="col-sm-3 col-md-2">
+                                    <div style="margin: 28px 0">
+                                        <button id="btn_income" class="btn btn-info waves-effect waves-light" role="button" aria-pressed="true">저장</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="col-md-8">
-                            <form name="add_income_list" method="POST" action="{{ route('update_income_list') }}" enctype="multipart/form-data">
-                                @csrf
-                                <div class="row">
-                                    <div class="col-sm-4 col-md-4">
-                                        <div class="md-form form-group">
-                                            <label for="name" class="active">상호</label>
-                                            <input class="form-control" id="name" name="name" type="text">
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-4 col-md-5">
-                                        <div class="md-form form-group">
-                                            <label for="phone" class="active">전화번호</label>
-                                            <input class="form-control" id="phone" name="phone" type="text">
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-3 col-md-3">
-                                        <div style="margin: 28px 0">
-                                            <button class="btn btn-info waves-effect waves-light" type="submit" role="button" aria-pressed="true">저장</button>
-                                        </div>
+                            <div class="row">
+                                <div class="col-sm-4 col-md-4">
+                                    <div class="md-form form-group">
+                                        <label for="name_income" class="active">상호</label>
+                                        <input class="form-control" id="name_income" name="name_income" type="text">
                                     </div>
                                 </div>
-                            </form>
+                                <div class="col-sm-4 col-md-5">
+                                    <div class="md-form form-group">
+                                        <label for="phone_income_list" class="active">전화번호</label>
+                                        <input class="form-control" id="phone_income_list" name="phone_income_list" type="text">
+                                    </div>
+                                </div>
+                                <div class="col-sm-3 col-md-3">
+                                    <div style="margin: 28px 0">
+                                        <button id="save_income_list" class="btn btn-info waves-effect waves-light" role="button" aria-pressed="true">저장</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="col-md-12">
                             <div class="bgc-white bd bdrs-3 p-20 mB-20">
@@ -225,9 +236,9 @@
                                                     <div class="peer">
                                                         <label class="switch" style="margin-bottom: 0.1em;">
                                                             @if($income['is_enabled'])
-                                                                <input id="income_status" type="checkbox" data-id="{{ $income['id'] }}" checked>
+                                                            <input id="income_status" type="checkbox" data-id="{{ $income['id'] }}" checked>
                                                             @else
-                                                                <input id="income_status" type="checkbox" data-id="{{ $income['id'] }}">
+                                                            <input id="income_status" type="checkbox" data-id="{{ $income['id'] }}">
                                                             @endif
                                                             <span class="slider round"></span>
                                                         </label>

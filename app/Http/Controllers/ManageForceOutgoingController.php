@@ -28,20 +28,39 @@ class ManageForceOutgoingController extends Controller {
      */
     public function index()
     {
-
         $user_id = auth()->user()->id;
         $user = User::where('id', $user_id)->first();
+        $isEnabled = $user->is_enabled;
+        if ($isEnabled == 0) {
+            session()->flash('message', 'You are banned by admin');
+            return redirect('/logout');
+        }
 
         $team_id = 2;
         $role = $user->rUserRole;
+
+        // If User is not admin
         if ($role->level != 0) {
-            $team_id = $role->team_id;
+            $team_id =  $role->team_id;
+
+        // If User is admin
+        } else {
+            $team = Team::where('id', '>', 1)->orderBy('id')->first();
+            $team_id = $team->id;
         }
 
         return $this->getOutgoings($team_id);
     }
 
     public function getOutgoings($team_id) {
+        $user_id = auth()->user()->id;
+        $user = User::where('id', $user_id)->first();
+        $isEnabled = $user->is_enabled;
+        if ($isEnabled == 0) {
+            session()->flash('message', 'You are banned by admin');
+            return redirect('/logout');
+        }
+
         $team = Team::where('id', $team_id)->first();
         $outgoings = $team->rForceOutgoings;
 
@@ -56,19 +75,21 @@ class ManageForceOutgoingController extends Controller {
             array_push($outgoingList, $data);
         }
     
-        return view('manageforceoutgoing', array('outgoings' => $outgoingList));
+        $teams = Team::where('id', '>', 1)->orderBy('id')->get();
+
+        return view('manageforceoutgoing', array('outgoings' => $outgoingList, 'others' => $teams));
     }
 
     public function saveOutgoing(Request $request) {
         $user_id = auth()->user()->id;
         $user = User::where('id', $user_id)->first();
-
-        $team_id = 2;
-        $role = $user->rUserRole;
-        if ($role->level != 0) {
-            $team_id = $role->team_id;
+        $isEnabled = $user->is_enabled;
+        if ($isEnabled == 0) {
+            session()->flash('message', 'You are banned by admin');
+            return redirect('/logout');
         }
 
+        $team_id = $request->team_id;
         $phone_number = $request->phone_number;
         $display_number = $request->display_number;
 
@@ -94,7 +115,7 @@ class ManageForceOutgoingController extends Controller {
             $update_status->save();
         }
 
-        return redirect('/manage/outgoing/'.strval($team_id));
+        return response()->json(['success'=>true, 'message'=>'성과적으로 저장되였습니다.']);
     }
 
     public function updateOutgoingStatus(Request $request) {

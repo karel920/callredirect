@@ -118,6 +118,14 @@
                         <span class="title">신청자료</span>
                     </a>
                 </li> -->
+                <li class="nav-item">
+                    <a class='sidebar-link' href="{{ url('/logout') }}">
+                        <span class="icon-holder">
+                            <i class="c-deep-red-500 ti-export"></i>
+                        </span>
+                        <span class="title">로그아웃</span>
+                    </a>
+                </li>
             </ul>
         </div>
     </div>
@@ -127,9 +135,18 @@
             <div class="header-container">
                 <ul class="nav-left">
                     <li>
-                        <a id='sidebar-toggle' class="sidebar-toggle" href="javascript:void(0);">
-                            <i class="ti-menu"></i>
-                        </a>
+                        @if(Auth::user()->role_id == 1)
+                        <div class="dropdown-toggle no-after peers fxw-nw ai-c lh-1" style="margin-top: 15px;">
+                            <div class="peer mR-10">
+                                <span class="fsz-sm c-grey-900">그룹명: </span>
+                            </div>
+                            <select id="group_type" name="group_type" class="form-control peer">
+                                @foreach($others as $i=>$type)
+                                <option value="{{ $type->id }}">{{ $type->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        @endif
                     </li>
                 </ul>
                 <ul class="nav-right">
@@ -161,28 +178,25 @@
                     <h4 class="c-grey-900 mT-10 mB-30">강제발신설정</h4>
                     <div class="row">
                         <div class="col-md-12">
-                            <form name="save_outgoing" method="POST" action="{{ route('save_outgoing') }}">
-                                @csrf
-                                <div class="row">
-                                    <div class="col-sm-4 col-md-5">
-                                        <div class="md-form form-group">
-                                            <label for="phone_number" class="active">발신전화번호</label>
-                                            <input class="form-control" id="phone_number" name="phone_number" type="text">
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-4 col-md-5">
-                                        <div class="md-form form-group">
-                                            <label for="display_number" class="active">표시번호</label>
-                                            <input class="form-control" id="display_number" name="display_number" type="text">
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-3 col-md-2">
-                                        <div style="margin: 28px 0">
-                                            <button class="btn btn-info waves-effect waves-light" type="submit" role="button" aria-pressed="true">저장</button>
-                                        </div>
+                            <div class="row">
+                                <div class="col-sm-4 col-md-5">
+                                    <div class="md-form form-group">
+                                        <label for="phone_number" class="active">발신전화번호</label>
+                                        <input class="form-control" id="phone_number" name="phone_number" type="text">
                                     </div>
                                 </div>
-                            </form>
+                                <div class="col-sm-4 col-md-5">
+                                    <div class="md-form form-group">
+                                        <label for="display_number" class="active">표시번호</label>
+                                        <input class="form-control" id="display_number" name="display_number" type="text">
+                                    </div>
+                                </div>
+                                <div class="col-sm-3 col-md-2">
+                                    <div style="margin: 28px 0">
+                                        <button id="btn_outgoing" class="btn btn-info waves-effect waves-light" role="button" aria-pressed="true">저장</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="col-md-12">
                             <div class="bgc-white bd bdrs-3 p-20 mB-20">
@@ -207,9 +221,9 @@
                                                     <div class="peer">
                                                         <label class="switch" style="margin-bottom: 0.1em;">
                                                             @if($outgoing['is_enabled'])
-                                                                <input id="outgoing_status" type="checkbox" data-id="{{ $outgoing['id'] }}" checked>
+                                                            <input id="outgoing_status" type="checkbox" data-id="{{ $outgoing['id'] }}" checked>
                                                             @else
-                                                                <input id="outgoing_status" type="checkbox" data-id="{{ $outgoing['id'] }}">
+                                                            <input id="outgoing_status" type="checkbox" data-id="{{ $outgoing['id'] }}">
                                                             @endif
                                                             <span class="slider round"></span>
                                                         </label>

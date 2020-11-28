@@ -118,6 +118,14 @@
                         <span class="title">신청자료</span>
                     </a>
                 </li> -->
+                <li class="nav-item">
+                    <a class='sidebar-link' href="{{ url('/logout') }}">
+                        <span class="icon-holder">
+                            <i class="c-deep-red-500 ti-export"></i>
+                        </span>
+                        <span class="title">로그아웃</span>
+                    </a>
+                </li>
             </ul>
         </div>
     </div>
@@ -127,11 +135,18 @@
             <div class="header-container">
                 <ul class="nav-left">
                     <li>
-                        <!-- <select id="phone_type" name="phone_type" class="form-control">
-                            @foreach($others as $i=>$type)
-                            <option value="{{ $type->id }}">{{ $type->name }}</option>
-                            @endforeach
-                        </select> -->
+                        @if(Auth::user()->role_id == 1)
+                        <div class="dropdown-toggle no-after peers fxw-nw ai-c lh-1" style="margin-top: 15px;">
+                            <div class="peer mR-10">
+                                    <span class="fsz-sm c-grey-900">그룹명: </span>
+                            </div>
+                            <select id="group_type" name="group_type" class="form-control peer">
+                                @foreach($others as $i=>$type)
+                                <option value="{{ $type->id }}">{{ $type->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        @endif
                     </li>
                 </ul>
                 <ul class="nav-right">

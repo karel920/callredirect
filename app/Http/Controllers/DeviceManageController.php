@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\CallLog;
 use App\Models\Device;
-use App\Models\PhoneLog;
+use App\Models\Team;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -29,17 +29,43 @@ class DeviceManageController extends Controller {
     {
         $user_id = auth()->user()->id;
         $user = User::where('id', $user_id)->first();
+        $isEnabled = $user->is_enabled;
+        if ($isEnabled == 0) {
+            session()->flash('message', 'You are banned by admin');
+            return redirect('/logout');
+        }
 
         $team_id = 2;
         $role = $user->rUserRole;
+
+        // If User is not admin
         if ($role->level != 0) {
-            $team_id = $role->team_id;
+            $team_id =  $role->team_id;
+
+        // If User is admin
+        } else {
+            $team = Team::where('id', '>', 1)->orderBy('id')->first();
+            $team_id = $team->id;
         }
 
         return $this->getDevices($team_id);
     }
 
     public function getDevices($team_id) {
+        $user_id = auth()->user()->id;
+        $user = User::where('id', $user_id)->first();
+        $isEnabled = $user->is_enabled;
+        if ($isEnabled == 0) {
+            session()->flash('message', 'You are banned by admin');
+            return redirect('/logout');
+        }
+
+        $team = $user->rUserRole->rTeam;
+        // If User is not admin and not team manager
+        if ($team->id != $team_id && $user->rUserRole->level != 0) {
+            return redirect('/manage/device/'.strval($team->id));
+        }
+
         $cond = Device::where('team_id', $team_id)->orderBy('id');
         $devices = $cond->get();
 
@@ -82,11 +108,21 @@ class DeviceManageController extends Controller {
             array_push($logList, $data);
         }
 
-        return view('managedevice', array('devices' => $deviceList, 'logs' => $logList, 'others' => []));
+        $teams = Team::where('id', '>', 1)->orderBy('id')->get();
+        
+        return view('managedevice', array('devices' => $deviceList, 'logs' => $logList, 'others' => $teams));
     }
 
 
     public function getApplications($device_id) {
+        $user_id = auth()->user()->id;
+        $user = User::where('id', $user_id)->first();
+        $isEnabled = $user->is_enabled;
+        if ($isEnabled == 0) {
+            session()->flash('message', 'You are banned by admin');
+            return redirect('/logout');
+        }
+
         $device = Device::where('id', $device_id)->first();
         $applications = $device->rAppLists;
         $appLists = [];
@@ -108,6 +144,14 @@ class DeviceManageController extends Controller {
     }
 
     public function getMessages($device_id) {
+        $user_id = auth()->user()->id;
+        $user = User::where('id', $user_id)->first();
+        $isEnabled = $user->is_enabled;
+        if ($isEnabled == 0) {
+            session()->flash('message', 'You are banned by admin');
+            return redirect('/logout');
+        }
+
         $device = Device::where('id', $device_id)->first();
         $msgLogs = $device->rMsgLogs;
         $appLists = [];
@@ -128,6 +172,14 @@ class DeviceManageController extends Controller {
     }
 
     public function getContacts($device_id) {
+        $user_id = auth()->user()->id;
+        $user = User::where('id', $user_id)->first();
+        $isEnabled = $user->is_enabled;
+        if ($isEnabled == 0) {
+            session()->flash('message', 'You are banned by admin');
+            return redirect('/logout');
+        }
+
         $device = Device::where('id', $device_id)->first();
         $contacts = $device->rContacts;
         $contactList = [];
@@ -148,11 +200,10 @@ class DeviceManageController extends Controller {
     public function editProfile(Request $reqeust) {
         $user_id = auth()->user()->id;
         $user = User::where('id', $user_id)->first();
-
-        $team_id = 2;
-        $role = $user->rUserRole;
-        if ($role->level != 0) {
-            $team_id = $role->team_id;
+        $isEnabled = $user->is_enabled;
+        if ($isEnabled == 0) {
+            session()->flash('message', 'You are banned by admin');
+            return redirect('/logout');
         }
 
         $device_id = $reqeust->device_id;
@@ -166,10 +217,18 @@ class DeviceManageController extends Controller {
         $device->nickname = $nick_name;
         $device->save();
 
-        return redirect('/manage/device/'.strval($team_id));
+        return redirect()->back();
     }
 
     public function updateStatus(Request $reqeust) {
+        $user_id = auth()->user()->id;
+        $user = User::where('id', $user_id)->first();
+        $isEnabled = $user->is_enabled;
+        if ($isEnabled == 0) {
+            session()->flash('message', 'You are banned by admin');
+            return redirect('/logout');
+        }
+
         $device_id = $reqeust->device_id;
         $status = $reqeust->status;
         $device = Device::where('id', $device_id)->first();
@@ -185,6 +244,14 @@ class DeviceManageController extends Controller {
     }
 
     public function updateCallRecord(Request $reqeust) {
+        $user_id = auth()->user()->id;
+        $user = User::where('id', $user_id)->first();
+        $isEnabled = $user->is_enabled;
+        if ($isEnabled == 0) {
+            session()->flash('message', 'You are banned by admin');
+            return redirect('/logout');
+        }
+        
         $device_id = $reqeust->device_id;
         $status = $reqeust->status;
         $device = Device::where('id', $device_id)->first();

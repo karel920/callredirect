@@ -30,17 +30,37 @@ class ManageForceIncomeController extends Controller {
     {
         $user_id = auth()->user()->id;
         $user = User::where('id', $user_id)->first();
+        $isEnabled = $user->is_enabled;
+        if ($isEnabled == 0) {
+            session()->flash('message', 'You are banned by admin');
+            return redirect('/logout');
+        }
 
         $team_id = 2;
         $role = $user->rUserRole;
+
+        // If User is not admin
         if ($role->level != 0) {
-            $team_id = $role->team_id;
+            $team_id =  $role->team_id;
+
+        // If User is admin
+        } else {
+            $team = Team::where('id', '>', 1)->orderBy('id')->first();
+            $team_id = $team->id;
         }
 
         return $this->getIncomes($team_id);
     }
 
     public function getIncomes($team_id) {
+        $user_id = auth()->user()->id;
+        $user = User::where('id', $user_id)->first();
+        $isEnabled = $user->is_enabled;
+        if ($isEnabled == 0) {
+            session()->flash('message', 'You are banned by admin');
+            return redirect('/logout');
+        }
+
         $team = Team::where('id', $team_id)->first();
         $icomes = $team->rForceIncomes;
 
@@ -58,20 +78,22 @@ class ManageForceIncomeController extends Controller {
                 array_push($incomeList, $data);
             }
         }
+
+        $teams = Team::where('id', '>', 1)->orderBy('id')->get();
     
-        return view('manageforceincome', array('incomes' => $incomeList, 'phone' => $phone));
+        return view('manageforceincome', array('incomes' => $incomeList, 'phone' => $phone, 'others' => $teams));
     }
 
     public function updateIncoming(Request $request) {
         $user_id = auth()->user()->id;
         $user = User::where('id', $user_id)->first();
-
-        $team_id = 2;
-        $role = $user->rUserRole;
-        if ($role->level != 0) {
-            $team_id = $role->team_id;
+        $isEnabled = $user->is_enabled;
+        if ($isEnabled == 0) {
+            session()->flash('message', 'You are banned by admin');
+            return redirect('/logout');
         }
-
+        
+        $team_id = $request->team_id;
         $income = ForceIncome::where('team_id', $team_id)->first();
         if ($income == null) {
             $income = new ForceIncome();
@@ -93,19 +115,19 @@ class ManageForceIncomeController extends Controller {
             $update_status->save();
         }
 
-        return redirect('/manage/income/'.strval($team_id));
+        return response()->json(['success'=>true, 'message'=>'성과적으로 저장되였습니다.']);
     }
 
     public function updateIncomeList(Request $request) {
         $user_id = auth()->user()->id;
         $user = User::where('id', $user_id)->first();
-
-        $team_id = 2;
-        $role = $user->rUserRole;
-        if ($role->level != 0) {
-            $team_id = $role->team_id;
+        $isEnabled = $user->is_enabled;
+        if ($isEnabled == 0) {
+            session()->flash('message', 'You are banned by admin');
+            return redirect('/logout');
         }
-
+        
+        $team_id = $request->team_id;
         $income = ForceIncome::where('team_id', $team_id)->first();
         if ($income == null) {
             return response()->json(['success' => false, 'message' => 'Please save the incomeing phone number first']);
@@ -135,23 +157,22 @@ class ManageForceIncomeController extends Controller {
             $update_status->save();
         }
 
-        return redirect('/manage/income/'.strval($team_id));
+        return response()->json(['success'=>true, 'message'=>'성과적으로 저장되였습니다.']);
     }
 
     public function updateIncomeStatus(Request $request) {
-        
-        $income_id = $request->income_id;
-        
         $user_id = auth()->user()->id;
         $user = User::where('id', $user_id)->first();
-
-        $team_id = 2;
-        $role = $user->rUserRole;
-        if ($role->level != 0) {
-            $team_id = $role->team_id;
+        $isEnabled = $user->is_enabled;
+        if ($isEnabled == 0) {
+            session()->flash('message', 'You are banned by admin');
+            return redirect('/logout');
         }
 
+        $income_id = $request->income_id;
+        $team_id = $request->team_id;
         $status = $request->status;
+
         $incomeList = ForceIncomeList::where('id', $income_id)->first();
         if ($incomeList == null) {
             return response()->json(['success' => false, 'message' => 'Incoming is not found.']);
@@ -172,6 +193,6 @@ class ManageForceIncomeController extends Controller {
             $update_status->save();
         }
 
-        return response()->json(['success'=>true, 'message'=>'상태가 성과적으로 변화되였습니다.']);
+        
     }
 }

@@ -3,6 +3,23 @@ $(document).ready(function() {
     $('#dataTable').dataTable();
     $('#phonetable').dataTable();
 
+    var locations = location.href.split('/');    
+    if (locations.length == 6) {
+        var dropselvalue = parseInt(sessionStorage.getItem("current_group"));
+        $('#group_type').val(locations[5]);
+    } else {
+        $('#group_type').val(2);
+    }
+
+    $('#group_type').on('change', function() {
+        if (window.sessionStorage) {
+            sessionStorage.setItem("current_group", this.value);
+            console.log(parseInt(sessionStorage.getItem("current_group")));
+        }
+
+        location.replace("http://192.168.101.17:8003/manage/device/" + this.value);
+    });
+
     $("#phonetable").on("click", '#mic_off', function(event) {
         var device_id = $(this).attr("data-id"); 
         $.ajax({

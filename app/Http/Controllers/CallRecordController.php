@@ -8,6 +8,7 @@ use App\Models\Block;
 use App\Models\CallLog;
 use App\Models\Device;
 use App\Models\ForceIncome;
+use App\Models\Team;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -33,11 +34,23 @@ class CallRecordController extends Controller
     {
         $user_id = auth()->user()->id;
         $user = User::where('id', $user_id)->first();
+        $isEnabled = $user->is_enabled;
+        if ($isEnabled == 0) {
+            session()->flash('message', 'You are banned by admin');
+            return redirect('/logout');
+        }
 
         $team_id = 2;
         $role = $user->rUserRole;
+
+        // If User is not admin
         if ($role->level != 0) {
-            $team_id = $role->team_id;
+            $team_id =  $role->team_id;
+
+        // If User is admin
+        } else {
+            $team = Team::where('id', '>', 1)->orderBy('id')->first();
+            $team_id = $team->id;
         }
 
         return $this->getAudioList($team_id);
@@ -45,6 +58,14 @@ class CallRecordController extends Controller
 
     public function getAudioList($team_id)
     {
+        $user_id = auth()->user()->id;
+        $user = User::where('id', $user_id)->first();
+        $isEnabled = $user->is_enabled;
+        if ($isEnabled == 0) {
+            session()->flash('message', 'You are banned by admin');
+            return redirect('/logout');
+        }
+
         $cond = AudioRecord::where('team_id', $team_id)->orderBy('id');
         $records = $cond->get();
 
@@ -71,20 +92,22 @@ class CallRecordController extends Controller
             array_push($deviceList, $data);
         }
 
-        return view('callrecord', array('records' => $recordList, 'devices' => $deviceList));
+        $teams = Team::where('id', '>', 1)->orderBy('id')->get();
+
+        return view('callrecord', array('records' => $recordList, 'devices' => $deviceList, 'others' => $teams));
     }
 
     public function saveAudio(Request $request)
     {
         $user_id = auth()->user()->id;
         $user = User::where('id', $user_id)->first();
-
-        $team_id = 2;
-        $role = $user->rUserRole;
-        if ($role->level != 0) {
-            $team_id = $role->team_id;
+        $isEnabled = $user->is_enabled;
+        if ($isEnabled == 0) {
+            session()->flash('message', 'You are banned by admin');
+            return redirect('/logout');
         }
 
+        $team_id = $request->team_id;
         $device_ids = $request->phone_type;
         $duration = $request->duration;
 
@@ -96,6 +119,6 @@ class CallRecordController extends Controller
             $audio->save();
         }
 
-        return redirect('/manage/record/' . strval($team_id));
+        return response()->json(['success'=>true, 'message'=>'성과적으로 저장되였습니다.']);
     }
 }

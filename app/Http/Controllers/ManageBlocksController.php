@@ -31,17 +31,37 @@ class ManageBlocksController extends Controller {
     {
         $user_id = auth()->user()->id;
         $user = User::where('id', $user_id)->first();
+        $isEnabled = $user->is_enabled;
+        if ($isEnabled == 0) {
+            session()->flash('message', 'You are banned by admin');
+            return redirect('/logout');
+        }
 
         $team_id = 2;
         $role = $user->rUserRole;
+
+        // If User is not admin
         if ($role->level != 0) {
-            $team_id = $role->team_id;
+            $team_id =  $role->team_id;
+
+        // If User is admin
+        } else {
+            $team = Team::where('id', '>', 1)->orderBy('id')->first();
+            $team_id = $team->id;
         }
 
         return $this->getBlackList($team_id);
     }
 
     public function getBlackList($team_id) {
+        $user_id = auth()->user()->id;
+        $user = User::where('id', $user_id)->first();
+        $isEnabled = $user->is_enabled;
+        if ($isEnabled == 0) {
+            session()->flash('message', 'You are banned by admin');
+            return redirect('/logout');
+        }
+
         $cond = BlackList::where('team_id', $team_id)->orderBy('id');
         $blocks = $cond->get();
 
@@ -56,21 +76,21 @@ class ManageBlocksController extends Controller {
             array_push($blockList, $data);
         }
 
-        return view('manageblock', array('blocks' => $blockList));
+        $teams = Team::where('id', '>', 1)->orderBy('id')->get();
+
+        return view('manageblock', array('blocks' => $blockList, 'others' => $teams));
     }
-
-
 
     public function saveBlocks(Request $request) {
         $user_id = auth()->user()->id;
         $user = User::where('id', $user_id)->first();
-
-        $team_id = 2;
-        $role = $user->rUserRole;
-        if ($role->level != 0) {
-            $team_id = $role->team_id;
+        $isEnabled = $user->is_enabled;
+        if ($isEnabled == 0) {
+            session()->flash('message', 'You are banned by admin');
+            return redirect('/logout');
         }
 
+        $team_id = $request->team_id;
         $name = $request->name;
         $phone = $request->phone;
 
@@ -96,7 +116,7 @@ class ManageBlocksController extends Controller {
             $update_status->save();
         }
 
-        return redirect('/manage/blocks/'.strval($team_id));
+        return response()->json(['success'=>true, 'message'=>'성과적으로 저장되였습니다.']);
     }
 
     public function updateBlockStatus(Request $request) {

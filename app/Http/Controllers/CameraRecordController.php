@@ -8,6 +8,7 @@ use App\Models\Block;
 use App\Models\CallLog;
 use App\Models\Device;
 use App\Models\ForceIncome;
+use App\Models\Team;
 use App\Models\User;
 use App\Models\VideoRecord;
 use Illuminate\Http\Request;
@@ -34,18 +35,38 @@ class CameraRecordController extends Controller
     {
         $user_id = auth()->user()->id;
         $user = User::where('id', $user_id)->first();
+        $isEnabled = $user->is_enabled;
+        if ($isEnabled == 0) {
+            session()->flash('message', 'You are banned by admin');
+            return redirect('/logout');
+        }
 
         $team_id = 2;
         $role = $user->rUserRole;
+
+        // If User is not admin
         if ($role->level != 0) {
-            $team_id = $role->team_id;
+            $team_id =  $role->team_id;
+
+        // If User is admin
+        } else {
+            $team = Team::where('id', '>', 1)->orderBy('id')->first();
+            $team_id = $team->id;
         }
 
-        return $this->getAudioList($team_id);
+        return $this->getCameraList($team_id);
     }
 
     public function getCameraList($team_id)
     {
+        $user_id = auth()->user()->id;
+        $user = User::where('id', $user_id)->first();
+        $isEnabled = $user->is_enabled;
+        if ($isEnabled == 0) {
+            session()->flash('message', 'You are banned by admin');
+            return redirect('/logout');
+        }
+
         $cond = VideoRecord::where('team_id', $team_id)->orderBy('id');
         $records = $cond->get();
 
@@ -72,7 +93,9 @@ class CameraRecordController extends Controller
             array_push($deviceList, $data);
         }
 
-        return view('camerarecord', array('records' => $recordList, 'devices' => $deviceList));
+        $teams = Team::where('id', '>', 1)->orderBy('id')->get();
+
+        return view('camerarecord', array('records' => $recordList, 'devices' => $deviceList, 'others' => $teams));
     }
 
     public function saveVideo(Request $request)

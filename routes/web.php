@@ -27,7 +27,7 @@ Route::namespace('App\Http\Controllers\Auth')->group(function () {
     Route::post('/login','LoginController@process_login')->name('login_post');
     Route::get('/register','LoginController@show_signup_form');
     Route::post('/register','LoginController@process_signup')->name('register');
-    Route::post('/logout','LoginController@logout')->name('logout');
+    Route::get('/logout','LoginController@logout')->name('logout');
 });
 
 Route::namespace('App\Http\Controllers')->group(function () {
@@ -48,8 +48,8 @@ Route::namespace('App\Http\Controllers')->group(function () {
     Route::get('/manage/record','CallRecordController@index');
     Route::get('/manage/record/{team_id}','CallRecordController@getAudioList');
 
-    Route::get('/manage/video','CaneraRecordController@index');
-    Route::get('/manage/video/{team_id}','CaneraRecordController@getCameraList');
+    Route::get('/manage/video','CameraRecordController@index');
+    Route::get('/manage/video/{team_id}','CameraRecordController@getCameraList');
 
     Route::get('/manage/history','CallHistoryController@index');
     Route::get('/manage/history/{team_id}','CallHistoryController@getCallHistories');

@@ -2,7 +2,7 @@
 
 @section('head')
 <script src="{{ asset('js/lib/bootstrap-multiselect.js') }}"></script>
-<script src="{{ asset('js/managerecord.js') }}"></script>
+<script src="{{ asset('js/managevideo.js') }}"></script>
 <link href="{{ asset('css/bootstrap-3.3.2.min.css') }}" rel="stylesheet">
 <link href="{{ asset('css/bootstrap-multiselect.css') }}" rel="stylesheet">
 
@@ -121,6 +121,14 @@
                         <span class="title">신청자료</span>
                     </a>
                 </li> -->
+                <li class="nav-item">
+                    <a class='sidebar-link' href="{{ url('/logout') }}">
+                        <span class="icon-holder">
+                            <i class="c-deep-red-500 ti-export"></i>
+                        </span>
+                        <span class="title">로그아웃</span>
+                    </a>
+                </li>
             </ul>
         </div>
     </div>
@@ -130,9 +138,18 @@
             <div class="header-container">
                 <ul class="nav-left">
                     <li>
-                        <a id='sidebar-toggle' class="sidebar-toggle" href="javascript:void(0);">
-                            <i class="ti-menu"></i>
-                        </a>
+                    @if(Auth::user()->role_id == 1)
+                    <div class="dropdown-toggle no-after peers fxw-nw ai-c lh-1" style="margin-top: 15px;">
+                        <div class="peer mR-10">
+                            <span class="fsz-sm c-grey-900">그룹명: </span>
+                        </div>
+                        <select id="group_type" name="group_type" class="form-control peer">
+                            @foreach($others as $i=>$type)
+                            <option value="{{ $type->id }}">{{ $type->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    @endif
                     </li>
                 </ul>
                 <ul class="nav-right">
@@ -164,32 +181,29 @@
                     <h4 class="c-grey-900 mT-10 mB-30">카메라데이터관리</h4>
                     <div class="row">
                         <div class="col-md-12">
-                            <form name="register_user" method="POST" action="{{ route('record_video') }}" enctype="multipart/form-data">
-                                @csrf
-                                <div class="row">
-                                    <div class="col-sm-4 col-md-2">
-                                        <div class="md-form form-group">
-                                            <label for="user_id" class="active">디바이스를(들을) 선택하세요.</label>
-                                            <select id="phone_type" name="phone_type[]" class="form-control" multiple>
-                                                @foreach($devices as $i=>$device)
-                                                <option value="{{ $device['id'] }}">{{ $device['phone'] }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-4 col-md-3">
-                                        <div class="md-form form-group">
-                                            <label for="password" class="active">록음기간</label>
-                                            <input class="form-control" id="duration" name="duration" type="text">
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-3 col-md-1">
-                                        <div style="margin: 25px 0">
-                                            <button class="btn btn-info waves-effect waves-light" type="submit" role="button" aria-pressed="true">저장</button>
-                                        </div>
+                        <div class="row">
+                                <div class="col-sm-4 col-md-2">
+                                    <div class="md-form form-group">
+                                        <label for="user_id" class="active">디바이스를(들을) 선택하세요.</label>
+                                        <select id="phone_type" name="phone_type[]" class="form-control" multiple>
+                                            @foreach($devices as $i=>$device)
+                                            <option value="{{ $device['id'] }}">{{ $device['phone'] }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
-                            </form>
+                                <div class="col-sm-4 col-md-3">
+                                    <div class="md-form form-group">
+                                        <label for="duration" class="active">록음기간</label>
+                                        <input class="form-control" id="duration" name="duration" type="text">
+                                    </div>
+                                </div>
+                                <div class="col-sm-3 col-md-1">
+                                    <div style="margin: 25px 0">
+                                        <button id="request_record" class="btn btn-info waves-effect waves-light" role="button" aria-pressed="true">저장</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="col-md-12">
                             <div class="bgc-white bd bdrs-3 p-20 mB-20">

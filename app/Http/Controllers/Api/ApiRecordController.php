@@ -5,10 +5,7 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\AudioRecord;
-use App\Models\BlackList;
 use App\Models\Device;
-use App\Models\Team;
-use App\Models\UpdateStatus;
 use App\Models\VideoRecord;
 use Illuminate\Support\Facades\File;
 

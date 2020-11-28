@@ -29,6 +29,10 @@ class LoginController extends Controller
         $credentials = $request->only('user_id', 'password');
 
         $user = User::where('user_id', $request->user_id)->first();
+        if ($user->is_enabled == 0) {
+            session()->flash('message', 'You are banned by admin');
+            return redirect()->back();
+        }
 
         if (Auth::attempt($credentials)) {
             return redirect()->route('manage_device');
