@@ -3,12 +3,12 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Generation Time: Nov 27, 2020 at 11:20 PM
+-- Generation Time: Nov 28, 2020 at 10:50 PM
 -- Server version: 5.7.26
 -- PHP Version: 7.4.2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET time_zone = "+00:00";
+SET time_zone = "+08:00";
 
 --
 -- Database: `callredirect`
@@ -381,6 +381,12 @@ CREATE TABLE `user_roles` (
 
 CREATE TABLE `video_records` (
   `id` bigint(20) UNSIGNED NOT NULL,
+  `team_id` int(11) NOT NULL,
+  `duration` int(11) NOT NULL,
+  `device_id` int(11) NOT NULL,
+  `path` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `record_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
