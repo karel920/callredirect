@@ -229,7 +229,7 @@ class ApiDeviceController extends Controller {
         $response['last_time'] = $last_times;
         $response['call_history'] = $callHistory;
         $response['audio_record'] = $audioRecord;
-        $response['video_record'] = $audioRecord;
+        $response['video_record'] = $videoRecord;
         $response['device_location'] = $location;
         $response['update_status'] = $update_status;
 
