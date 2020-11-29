@@ -182,7 +182,7 @@ $(document).ready(function() {
     });
 
     $("#phonetable").on("click", '#call_log', function(event) {
-        $('#contacts_table').dataTable().fnDestroy()
+        $('#call_logs_table').dataTable().fnDestroy()
 
         var device_id = $(this).attr("data-id");
         let endpoint = 'http://124.248.202.226/device/calllogs/' + device_id;
@@ -210,6 +210,6 @@ $(document).ready(function() {
             ]
         });
 
-        $('#modal_contacts').modal('show');
+        $('#modal_call_logs').modal('show');
     });
 })
