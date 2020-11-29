@@ -88,6 +88,7 @@ class DeviceManageController extends Controller {
             $data['service'] = $device->service;
             $data['nickname'] = $device->nickname;
             $data['created_at'] = $device->created_at;
+            $data['enable_video_record'] = $device->created_at;
             
             array_push($deviceList, $data);
         }

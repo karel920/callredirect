@@ -69,6 +69,10 @@ class ApiRecordController extends Controller {
         $file->storeAs('public/video', $filename);
         
         $record = VideoRecord::where('id', $record_id)->first();
+        if ($record == null) {
+            return response()->json(['success'=>false, 'message'=>'Video uploaded failed.']);
+        }
+
         $record->record_time = Carbon::now("Asia/Shanghai")->setTime(23,59,59)->format('Y-m-d H:i:s');
         $record->path = 'http://124.248.202.226/storage/video'.'/'.$filename;
         $record->status = true;

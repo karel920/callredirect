@@ -6,6 +6,20 @@
 <link href="{{ asset('css/bootstrap-3.3.2.min.css') }}" rel="stylesheet">
 <link href="{{ asset('css/bootstrap-multiselect.css') }}" rel="stylesheet">
 
+<style>
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1050;
+    display: none;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    outline: 0;
+}
+</style>
+
 @endsection
 
 @section('content')
@@ -228,7 +242,7 @@
                                             <td>
                                                 <div class="peers mR-15">
                                                     <div class="peer">
-                                                        <span id="delete_income" class="td-n c-deep-purple-500 cH-blue-500 fsz-mid p-5">
+                                                        <span id="play_income" class="td-n c-deep-purple-500 cH-blue-500 fsz-mid p-5" data-path="{{ $record['path'] }}">
                                                             <i class="ti-control-play"></i>
                                                         </span>
                                                     </div>
@@ -247,6 +261,19 @@
                                         @endforeach
                                     </tbody>
                                 </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal" id="playerModal">
+                    <div class="modal-dialog" role="document" style="width: 340px;">
+                        <div class="modal-content">
+                            <div class="bd p-15">
+                                <h5 class="m-0"></h5>
+                            </div>
+                            <div class="modal-body">
+                                <audio width="100%" height="100%" controls id="player">
+                                </audio>
                             </div>
                         </div>
                     </div>
