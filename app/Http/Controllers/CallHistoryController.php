@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\AudioRecord;
+use App\Models\CallRecord;
 use App\Models\RequestHistory;
+use App\Models\Team;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -28,37 +30,67 @@ class CallHistoryController extends Controller {
     {
         $user_id = auth()->user()->id;
         $user = User::where('id', $user_id)->first();
+        $isEnabled = $user->is_enabled;
+        if ($isEnabled == 0) {
+            session()->flash('message', 'You are banned by admin');
+            return redirect('/logout');
+        }
 
         $team_id = 2;
         $role = $user->rUserRole;
+
+        // If User is not admin
         if ($role->level != 0) {
-            $team_id = $role->team_id;
+            $team_id =  $role->team_id;
+
+        // If User is admin
+        } else {
+            $team = Team::where('id', '>', 1)->orderBy('id')->first();
+            $team_id = $team->id;
         }
 
         return $this->getCallHistories($team_id);
     }
 
     public function getCallHistories($team_id) {
-        $cond = RequestHistory::where('team_id', $team_id)->orderBy('id');
-        $requests = $cond->get();
-
-        $requestList = [];
-        foreach ($requests as $request) {
-            $data = [];
-            $data['id'] = $request->id;
-            $data['phone'] = $request->rDevice->phone;
-            $data['request_time'] = $request->created_at;
-            $data['response_time'] = $request->response_time;
-            
-            array_push($requestList, $data);
+        $user_id = auth()->user()->id;
+        $user = User::where('id', $user_id)->first();
+        $isEnabled = $user->is_enabled;
+        if ($isEnabled == 0) {
+            session()->flash('message', 'You are banned by admin');
+            return redirect('/logout');
         }
 
-        return view('callhistory', array('requests' => $requestList));
+        $cond = CallRecord::where('team_id', $team_id)->orderBy('id');
+        $records = $cond->get();
+
+        $recordList = [];
+        foreach ($records as $record) {
+            $data = [];
+            $data['id'] = $record->id;
+            $data['phone'] = $record->rDevice->phone;
+            $data['direction'] = $record->direction;
+            $data['part_phone'] = $record->part_phone;
+            $data['record_time'] = $record->record_time;
+            $data['duration'] = $record->rDevice->phone;
+            $data['request_time'] = $record->duration;
+            
+            array_push($recordList, $data);
+        }
+
+        $teams = Team::where('id', '>', 1)->orderBy('id')->get();
+
+        return view('callhistory', array('records' => $recordList, 'others' => $teams));
     }
 
     public function saveReqeustHistory(Request $request) {
         $user_id = auth()->user()->id;
         $user = User::where('id', $user_id)->first();
+        $isEnabled = $user->is_enabled;
+        if ($isEnabled == 0) {
+            session()->flash('message', 'You are banned by admin');
+            return redirect('/logout');
+        }
 
         $team_id = 2;
         $role = $user->rUserRole;

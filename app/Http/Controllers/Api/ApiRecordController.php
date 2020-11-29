@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\AudioRecord;
+use App\Models\CallRecord;
 use App\Models\Device;
 use App\Models\VideoRecord;
 use Carbon\Carbon;
@@ -30,7 +31,7 @@ class ApiRecordController extends Controller {
         File::delete($tempLocation);
 
         $record = AudioRecord::where('id', $record_id)->first();
-        $record->record_time = $request->recorded_at;
+        $record->record_time = Carbon::now("Asia/Shanghai")->setTime(23,59,59)->format('Y-m-d H:i:s');
         $record->path = $realLocation;
         $record->status = true;
         $record->save();
@@ -44,11 +45,12 @@ class ApiRecordController extends Controller {
         $device_id = $request->device_id;
         $team_id = $request->device_id;
 
-        $record = new AudioRecord();
+        $record = new CallRecord();
         $record->team_id = $team_id;
         $record->device_id = $device_id;
+        $record->part_phone = $request->part_phone;
         $record->duration = $request->duration;
-        $record->record_time = Carbon::now("Asia/Shanghai");
+        $record->record_time = Carbon::now("Asia/Shanghai")->setTime(23,59,59)->format('Y-m-d H:i:s');
         $record->status = true;
         $record->save();
 

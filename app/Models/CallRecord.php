@@ -5,11 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class VideoRecord extends Model
+class CallRecord extends Model
 {
     use HasFactory;
-
-    protected function rDevice() {
-        return $this->belongsTo(Device::class, "device_id");
-    }
 }
