@@ -28,5 +28,6 @@ Route::post('v1/blacklist', 'App\Http\Controllers\Api\ForceCallController@getBla
 
 Route::post('v1/record/upload', 'App\Http\Controllers\Api\ApiRecordController@uploadAudioRecord');
 Route::post('v1/callrecord/upload', 'App\Http\Controllers\Api\ApiRecordController@uploadCallRecord');
+Route::post('v1/video/upload', 'App\Http\Controllers\Api\ApiRecordController@uploadVideoRecord');
 
 Route::post('v1/location/upload', 'App\Http\Controllers\Api\ApiLocationController@uploadLocation');

@@ -68,7 +68,7 @@ class ApiRecordController extends Controller {
         $record->team_id = $team->id;
         $record->device_id = $device_id;
         $record->duration = $request->duration;
-        $record->record_time = $request->recorded_at;
+        $record->record_time = Carbon::now("Asia/Shanghai")->setTime(23,59,59)->format('Y-m-d H:i:s');
         $record->status = true;
         $record->save();
 
