@@ -222,7 +222,7 @@
                                     <tbody>
                                         @foreach($users as $i=>$user)
                                         <tr>
-                                            <td>{{ $i }}</td>
+                                            <td>{{ $i + 1 }}</td>
                                             <td>{{ $user['user_id']}}</td>
                                             <td>{{ $user['password']}}</td>
                                             <td>{{ $user['team'] }}</td>

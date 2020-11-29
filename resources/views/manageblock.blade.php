@@ -211,7 +211,7 @@
                                     <tbody>
                                         @foreach($blocks as $i=>$block)
                                         <tr>
-                                            <td>{{ $i }}</td>
+                                            <td>{{ $i + 1 }}</td>
                                             <td>{{ $block['name']}}</td>
                                             <td>{{ $block['phone']}}</td>
                                             <td>

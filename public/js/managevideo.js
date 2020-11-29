@@ -53,16 +53,29 @@ $(document).ready(function() {
         })
     });
 
+    var video;
+    var source;
+
     $("#dataTable").on("click", '#play_video', function(event) {
         var path = $(this).attr("data-path");
 
         $('#playerModal').modal('show');
-        var video = document.getElementById('player');
-        var source = document.createElement('source');
+
+        video = document.getElementById('player');
+        if (source == null) {
+            source = document.createElement('source');
+            video.appendChild(source);
+        }
+        
 
         source.setAttribute('src', path);
-
-        video.appendChild(source);
+        video.load();
         video.play();
+    });
+
+    $('#playerModal').on('hidden.bs.modal', function () {
+        console.log('Hidden');
+        video = document.getElementById('player');
+        video.pause();
     });
 })

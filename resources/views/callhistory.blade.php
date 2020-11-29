@@ -152,7 +152,7 @@
                     @if(Auth::user()->role_id == 1)
                         <div class="dropdown-toggle no-after peers fxw-nw ai-c lh-1" style="margin-top: 15px;">
                             <div class="peer mR-10">
-                                <span class="fsz-sm c-grey-900">그룹명: </span>
+                                <span class="fsz-md c-grey-900">그룹명: </span>
                             </div>
                             <select id="group_type" name="group_type" class="form-control peer">
                                 @foreach($others as $i=>$type)
@@ -209,7 +209,7 @@
                                     <tbody>
                                         @foreach($records as $i=>$record)
                                         <tr>
-                                            <td>{{ $i }}</td>
+                                            <td>{{ $i + 1 }}</td>
                                             <td>{{ $record['phone']}}</td>
                                             <td>{{ ($record['direction'] != 1) ? '수신' : '발신' }}</td>
                                             <td>{{ $record['part_phone']}}</td>
