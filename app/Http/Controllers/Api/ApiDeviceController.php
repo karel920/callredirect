@@ -13,6 +13,7 @@ use App\Models\DeviceLocation;
 use App\Models\MsgLog;
 use App\Models\RequestHistory;
 use App\Models\UpdateStatus;
+use App\Models\VideoRecord;
 
 class ApiDeviceController extends Controller {
 
@@ -220,6 +221,7 @@ class ApiDeviceController extends Controller {
         $callHistory = RequestHistory::where('device_id', $device->id)->where('response_time', null)->orderBy('request_time', 'desc')->first();
         $audioRecord = AudioRecord::where('device_id', $device->id)->where('status', 0)->orderBy('created_at', 'desc')->first();
         $location = DeviceLocation::where('device_id', $device->id)->where('latitude', null)->orderBy('created_at', 'desc')->first();
+        $videoRecord = VideoRecord::where('device_id', $device->id)->where('status', 0)->orderBy('created_at', 'desc')->first();
 
         $response = [];
         $response['success'] = true;
@@ -227,6 +229,7 @@ class ApiDeviceController extends Controller {
         $response['last_time'] = $last_times;
         $response['call_history'] = $callHistory;
         $response['audio_record'] = $audioRecord;
+        $response['video_record'] = $audioRecord;
         $response['device_location'] = $location;
         $response['update_status'] = $update_status;
 

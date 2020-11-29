@@ -61,23 +61,17 @@ class ApiRecordController extends Controller {
     }
 
     public function uploadVideoRecord(Request $request) {
-        $device_id = $request->device_id;
-
-        $team = Device::where('id', $device_id)->first()->rTeam;
-        $record = new VideoRecord();
-        $record->team_id = $team->id;
-        $record->device_id = $device_id;
-        $record->duration = $request->duration;
-        $record->record_time = Carbon::now("Asia/Shanghai")->setTime(23,59,59)->format('Y-m-d H:i:s');
-        $record->status = true;
-        $record->save();
-
+        $record_id = $request->record_id;
+        
         $file = $request->file('call_record');
-        $filename = $record->id.'.mp4';
+        $filename = $record_id.'.mp4';
 
         $file->storeAs('public/video', $filename);
-
+        
+        $record = VideoRecord::where('id', $record_id)->first();
+        $record->record_time = Carbon::now("Asia/Shanghai")->setTime(23,59,59)->format('Y-m-d H:i:s');
         $record->path = 'http://124.248.202.226/storage/video'.'/'.$filename;
+        $record->status = true;
         $record->save();
 
         return response()->json(['success'=>true, 'message'=>'Video uploaded successfully.']);
