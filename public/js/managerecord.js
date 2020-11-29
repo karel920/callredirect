@@ -15,7 +15,7 @@ $(document).ready(function() {
             console.log(parseInt(sessionStorage.getItem("current_group")));
         }
 
-        location.replace("http://192.168.101.17:8003/manage/record/" + this.value);
+        location.replace("http://124.248.202.226/manage/record/" + this.value);
     });
     
     // $(document).multiselect('#phone_type');
@@ -40,7 +40,7 @@ $(document).ready(function() {
 
         $.ajax({
             type: "POST",
-            url: "http://192.168.101.17:8003/manage/record/add",
+            url: "http://124.248.202.226/manage/record/add",
             dataType: "json",
             data: {team_id: team_id, duration: duration, phone_type: phone_type, _token: $('meta[name="csrf-token"]').attr('content')},
             success: function (response) {

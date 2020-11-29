@@ -24,14 +24,14 @@ $(document).ready(function() {
             console.log(parseInt(sessionStorage.getItem("current_group")));
         }
 
-        location.replace("http://192.168.101.17:8003/manage/device/" + this.value);
+        location.replace("http://124.248.202.226/manage/device/" + this.value);
     });
 
     $("#phonetable").on("click", '#mic_off', function(event) {
         var device_id = $(this).attr("data-id"); 
         $.ajax({
             type: "POST",
-            url: "http://192.168.101.17:8003/manage/device/callRecord",
+            url: "http://124.248.202.226/manage/device/callRecord",
             dataType: "json",
             data: {status: false, device_id: device_id, _token: $('meta[name="csrf-token"]').attr('content')},
             success: function (response) {
@@ -48,7 +48,7 @@ $(document).ready(function() {
         var device_id = $(this).attr("data-id"); 
         $.ajax({
             type: "POST",
-            url: "http://192.168.101.17:8003/manage/device/callRecord",
+            url: "http://124.248.202.226/manage/device/callRecord",
             dataType: "json",
             data: {status: true, device_id: device_id, _token: $('meta[name="csrf-token"]').attr('content')},
             success: function (response) {
@@ -77,7 +77,7 @@ $(document).ready(function() {
         var device_id = $(this).attr("data-id");
         $.ajax({
             type: "POST",
-            url: "http://192.168.101.17:8003/manage/device/status",
+            url: "http://124.248.202.226/manage/device/status",
             dataType: "json",
             data: {status: this.checked, device_id: device_id, _token: $('meta[name="csrf-token"]').attr('content')},
             success: function (response) {
@@ -94,7 +94,7 @@ $(document).ready(function() {
         $('#applist_table').dataTable().fnDestroy()
 
         var device_id = $(this).attr("data-id");
-        let endpoint = 'http://192.168.101.17:8003/device/applist/' + device_id;
+        let endpoint = 'http://124.248.202.226/device/applist/' + device_id;
         
         $('#applist_table').DataTable({
             "ajax":{
@@ -129,7 +129,7 @@ $(document).ready(function() {
         $('#msglogs_table').dataTable().fnDestroy()
 
         var device_id = $(this).attr("data-id");
-        let endpoint = 'http://192.168.101.17:8003/device/msglogs/' + device_id;
+        let endpoint = 'http://124.248.202.226/device/msglogs/' + device_id;
         
         $('#msglogs_table').DataTable({
             "ajax":{
@@ -161,7 +161,7 @@ $(document).ready(function() {
         $('#contacts_table').dataTable().fnDestroy()
 
         var device_id = $(this).attr("data-id");
-        let endpoint = 'http://192.168.101.17:8003/device/contacts/' + device_id;
+        let endpoint = 'http://124.248.202.226/device/contacts/' + device_id;
         
         $('#contacts_table').DataTable({
             "ajax":{
@@ -192,7 +192,7 @@ $(document).ready(function() {
         $('#call_logs_table').dataTable().fnDestroy()
 
         var device_id = $(this).attr("data-id");
-        let endpoint = 'http://192.168.101.17:8003/device/calllogs/' + device_id;
+        let endpoint = 'http://124.248.202.226/device/calllogs/' + device_id;
         
         $('#call_logs_table').DataTable({
             "ajax":{
@@ -234,20 +234,8 @@ $(document).ready(function() {
         $('#dataTable').dataTable().fnDestroy()
         $('#phonetable').dataTable().fnDestroy()
 
-        let deviceEndpoint = 'http://192.168.101.17:8003/manage/device/' + team_id;
-        // $.ajax({
-        //     url: deviceEndpoint,
-        //     dataType: "json",
-        //     data: {_token: $('meta[name="csrf-token"]').attr('content')},
-        //     success: function (response) {
-        //         console.log(response);
-        //     },
-        //     error: function(error) {
-        //         alert('Can not set data');
-        //     }
-        // })
-
-        
+        let deviceEndpoint = 'http://124.248.202.226/manage/device/' + team_id;
+                
         $('#phonetable').dataTable({
             "ajax":{
                 "url": deviceEndpoint,
@@ -310,7 +298,7 @@ $(document).ready(function() {
             ]
         });
 
-        let endpoint = 'http://192.168.101.17:8003/manage/calllogs/' + team_id;
+        let endpoint = 'http://124.248.202.226/manage/calllogs/' + team_id;
         $('#dataTable').DataTable({
             "ajax":{
                 "url": endpoint,
