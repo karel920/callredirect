@@ -89,7 +89,7 @@
                 <li class="nav-item">
                     <a class='sidebar-link' href="{{ url('/manage/video') }}">
                         <span class="icon-holder">
-                            <i class="c-blue-500 ti-microphone"></i>
+                            <i class="c-blue-500 ti-video-camera"></i>
                         </span>
                         <span class="title">녹화데이터</span>
                     </a>
@@ -97,9 +97,9 @@
                 <li class="nav-item">
                     <a class='sidebar-link' href="{{ url('/manage/history') }}">
                         <span class="icon-holder">
-                            <i class="c-deep-orange-500 ti-bell"></i>
+                            <i class="c-deep-orange-500 ti-headphone-alt"></i>
                         </span>
-                        <span class="title">통화내역</span>
+                        <span class="title">통화녹음데이터</span>
                     </a>
                 </li>
                 <li class="nav-item">

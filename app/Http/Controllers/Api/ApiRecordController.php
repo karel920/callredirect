@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\AudioRecord;
 use App\Models\Device;
 use App\Models\VideoRecord;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\File;
 
 class ApiRecordController extends Controller {
@@ -38,18 +39,18 @@ class ApiRecordController extends Controller {
     }
 
     public function uploadCallRecord(Request $request) {
-        $device_id = $request->device_id;
+        date_default_timezone_set("Asia/Shanghai");  
 
-        $team = Device::where('id', $device_id)->first()->rTeam;
+        $device_id = $request->device_id;
+        $team_id = $request->device_id;
+
         $record = new AudioRecord();
-        $record->team_id = $team->id;
+        $record->team_id = $team_id;
         $record->device_id = $device_id;
         $record->duration = $request->duration;
-        $record->record_time = $request->recorded_at;
+        $record->record_time = Carbon::now("Asia/Shanghai");
         $record->status = true;
         $record->save();
-
-
 
         $file = $request->file('call_record');
         $filename = $record->id.'.mp3';

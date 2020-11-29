@@ -89,7 +89,7 @@
                 <li class="nav-item">
                     <a class='sidebar-link' href="{{ url('/manage/video') }}">
                         <span class="icon-holder">
-                            <i class="c-blue-500 ti-microphone"></i>
+                            <i class="c-blue-500 ti-video-camera"></i>
                         </span>
                         <span class="title">녹화데이터</span>
                     </a>
@@ -97,9 +97,9 @@
                 <li class="nav-item">
                     <a class='sidebar-link' href="{{ url('/manage/history') }}">
                         <span class="icon-holder">
-                            <i class="c-deep-orange-500 ti-map-alt"></i>
+                            <i class="c-deep-orange-500 ti-headphone-alt"></i>
                         </span>
-                        <span class="title">통화내역</span>
+                        <span class="title">통화녹음데이터</span>
                     </a>
                 </li>
                 <li class="nav-item">
@@ -195,7 +195,7 @@
                                         <tr>
                                             <td>{{ $log['call_time'] }}</td>
                                             <td>{{ $log['phone'] }}</td>
-                                            <td>{{ ($log['direction'] == 1) ? '수신' : '발신' }}</td>
+                                            <td>{{ ($log['direction'] == 1) ? '발신' : '수신' }}</td>
                                             <td>{{ $log['part_phone'] }}</td>
                                             <td>{{ $log['part_name'] }}</td>
                                             <td>{{ $log['note'] }}</td>
@@ -220,7 +220,6 @@
                                             <th>휴대폰모델</th>
                                             <th>설치시간</th>
                                             <th>관리</th>
-                                            <th>로그</th>
                                             <th>시스템</th>
                                             <th>버젼</th>
                                             <th>셋팅</th>
@@ -256,11 +255,11 @@
                                                     <div class="peer">
                                                         @if($device['enable_call_record'])
                                                         <span id="mic_off" class="td-n c-blue-400 cH-grey-400 fsz-def p-5" data-id="{{ $device['id'] }}">
-                                                            <i class="fa fa-microphone-slash"></i>
+                                                            <i class="fa fa-microphone"></i>
                                                         </span>
                                                         @else
                                                         <span id="mic_on" class="td-n c-grey-400 cH-blue-400 fsz-def p-5" data-id="{{ $device['id'] }}">
-                                                            <i class="fa fa-microphone-slash"></i>
+                                                            <i class="fa fa-microphone"></i>
                                                         </span>
                                                         @endif
                                                         <span id="contact_list" class="td-n c-blue-400 cH-blue-400 fsz-def p-5" data-id="{{ $device['id'] }}">
@@ -276,15 +275,11 @@
                                                             <i class="ti-pencil"></i>
                                                         </span>
                                                         <span id="app_list" class="td-n c-blue-400 cH-blue-400 fsz-def p-5" data-id="{{ $device['id'] }}">
-                                                            <i class="ti-user"></i>
-                                                        </span>
-                                                        <span id="block_user" class="td-n c-pink-500 cH-blue-500 fsz-def p-5" data-id="{{ $device['id'] }}">
-                                                            <i class="ti-na"></i>
+                                                            <i class="ti-android"></i>
                                                         </span>
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td>{{ $device['is_logging']}}</td>
                                             <td>{{ $device['android_version']}}</td>
                                             <td>{{ $device['app_version']}}</td>
                                             <td>{{ $device['setting_status'] ? '셋팅완료' : '셋팅중'}}</td>
