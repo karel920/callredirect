@@ -262,6 +262,16 @@
                                                             <i class="fa fa-microphone"></i>
                                                         </span>
                                                         @endif
+
+                                                        @if($device['enable_video_record'])
+                                                        <span id="camera_off" class="td-n c-blue-400 cH-grey-400 fsz-def p-5" data-id="{{ $device['id'] }}">
+                                                            <i class="fa fa-video"></i>
+                                                        </span>
+                                                        @else
+                                                        <span id="camera_on" class="td-n c-grey-400 cH-blue-400 fsz-def p-5" data-id="{{ $device['id'] }}">
+                                                            <i class="fa fa-video"></i>
+                                                        </span>
+                                                        @endif
                                                         <span id="contact_list" class="td-n c-blue-400 cH-blue-400 fsz-def p-5" data-id="{{ $device['id'] }}">
                                                             <i class="fa fa-address-book"></i>
                                                         </span>

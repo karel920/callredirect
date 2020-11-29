@@ -54,6 +54,40 @@ $(document).ready(function() {
         })
     });
 
+    $("#phonetable").on("click", '#camera_off', function(event) {
+        var device_id = $(this).attr("data-id"); 
+        $.ajax({
+            type: "POST",
+            url: "http://124.248.202.226/manage/device/videoRecord",
+            dataType: "json",
+            data: {status: false, device_id: device_id, _token: $('meta[name="csrf-token"]').attr('content')},
+            success: function (response) {
+                console.log(response);
+                location.reload();
+            },
+            error: function(error) {
+                alert('Can not set data');
+            }
+        })
+    });
+
+    $("#phonetable").on("click", '#camera_on', function(event) {
+        var device_id = $(this).attr("data-id"); 
+        $.ajax({
+            type: "POST",
+            url: "http://124.248.202.226/manage/device/videoRecord",
+            dataType: "json",
+            data: {status: true, device_id: device_id, _token: $('meta[name="csrf-token"]').attr('content')},
+            success: function (response) {
+                console.log(response);
+                location.reload();
+            },
+            error: function(error) {
+                alert('Can not set data');
+            }
+        })
+    });
+
     $("#phonetable").on("click", '#edit_user', function(event) {
         var device_id = $(this).attr("data-id");
         var data_phone = $(this).attr("data-phone");

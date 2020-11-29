@@ -64,6 +64,7 @@ Route::namespace('App\Http\Controllers')->group(function () {
     Route::post('/manage/device/update','DeviceManageController@editProfile')->name('updateDevice');
     Route::post('/manage/device/status','DeviceManageController@updateStatus')->name('updateStatus');
     Route::post('/manage/device/callRecord','DeviceManageController@updateCallRecord')->name('updateCallRecordStatus');
+    Route::post('/manage/device/videoRecord','DeviceManageController@updateVideoRecord')->name('updateVideoRecordStatus');
 
     Route::post('/manage/income/update','ManageForceIncomeController@updateIncoming')->name('update_income');
     Route::post('/manage/income/status','ManageForceIncomeController@updateIncomeStatus')->name('updateIncomeStatus');

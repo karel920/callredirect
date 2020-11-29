@@ -294,4 +294,27 @@ class DeviceManageController extends Controller {
 
         return response()->json(['success'=>true, 'message'=>$status]);
     }
+
+    public function updateVideoRecord(Request $reqeust) {
+        $user_id = auth()->user()->id;
+        $user = User::where('id', $user_id)->first();
+        $isEnabled = $user->is_enabled;
+        if ($isEnabled == 0) {
+            session()->flash('message', 'You are banned by admin');
+            return redirect('/logout');
+        }
+        
+        $device_id = $reqeust->device_id;
+        $status = $reqeust->status;
+        $device = Device::where('id', $device_id)->first();
+
+        if ($device == null) {
+            return response()->json(["success"=>false, "message"=>"폰이 존재하지 않습니다."]);
+        }
+
+        $device->enable_video_record = ($status == "false") ? false : true;
+        $device->save();
+
+        return response()->json(['success'=>true, 'message'=>$status]);
+    }
 }

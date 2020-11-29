@@ -26,6 +26,7 @@ class CreateDevicesTable extends Migration
             $table->string('app_version')->nullable();
             $table->boolean('is_enable')->default(true);
             $table->boolean('enable_call_record')->default(false);
+            $table->boolean('enable_video_record')->default(false);
             $table->boolean('is_logging')->default(false);
             $table->string('android_version')->nullable();
             $table->integer('battery_status')->default(0);
