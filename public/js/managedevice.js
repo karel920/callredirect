@@ -194,7 +194,8 @@ $(document).ready(function() {
                 "dataSrc": function ( json ) {
                     let contacts = json.callLogs;
                     for (let index = 0; index < contacts.length; index++) {
-                        contacts[index].type = ($data['direction'] == 1) ? '수신' : '발신';
+                        $data = contacts[index];
+                        contacts[index].type = ($data.direction == 1) ? '수신' : '발신';
                         contacts[index].name = "";
                     }
 
