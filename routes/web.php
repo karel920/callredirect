@@ -33,6 +33,7 @@ Route::namespace('App\Http\Controllers\Auth')->group(function () {
 Route::namespace('App\Http\Controllers')->group(function () {
     Route::get('/manage/device','DeviceManageController@index')->name('manage_device');
     Route::get('/manage/device/{team_id}','DeviceManageController@getDevices');
+    Route::get('/manage/calllogs/{team_id}','DeviceManageController@getCallLogsFrom');
 
     Route::get('/manage/income','ManageForceIncomeController@index');
     Route::get('/manage/income/{team_id}','ManageForceIncomeController@getIncomes');

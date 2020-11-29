@@ -191,16 +191,6 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach($logs as $i=>$log)
-                                        <tr>
-                                            <td>{{ $log['call_time'] }}</td>
-                                            <td>{{ $log['phone'] }}</td>
-                                            <td>{{ ($log['direction'] == 1) ? '발신' : '수신' }}</td>
-                                            <td>{{ $log['part_phone'] }}</td>
-                                            <td>{{ $log['part_name'] }}</td>
-                                            <td>{{ $log['note'] }}</td>
-                                        </tr>
-                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
@@ -226,65 +216,6 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach($devices as $i=>$device)
-                                        <tr>
-                                            <td>{{ $i + 1 }}</td>
-                                            <td>{{ $device['status'] ? '온라인' : '오프라인' }}</td>
-                                            <td>
-                                                <div class="peers mR-15">
-                                                    <div class="peer">
-                                                        <label class="switch" style="margin-bottom: 0.1em;">
-                                                            @if($device['is_enable'])
-                                                                <input id="device_status" type="checkbox" data-id="{{ $device['id'] }}" checked>
-                                                            @else
-                                                                <input id="device_status" type="checkbox" data-id="{{ $device['id'] }}">
-                                                            @endif
-                                                            <span class="slider round"></span>
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>{{ $device['phone']}} @if($device['nickname'] != null) ({{ $device['nickname']}}) @endif </td>
-                                            <td>{{ $device['service']}}</td>
-                                            <td>{{ ($device['signal_status'] == 0) ? 'LTE' : 'Wifi'}}</td>
-                                            <td>{{ strval($device['battery_status'])."%" }}</td>
-                                            <td>{{ $device['model']}}</td>
-                                            <td>{{ $device['created_at']}}</td>
-                                            <td>
-                                                <div class="peers mR-15">
-                                                    <div class="peer">
-                                                        @if($device['enable_call_record'])
-                                                        <span id="mic_off" class="td-n c-blue-400 cH-grey-400 fsz-def p-5" data-id="{{ $device['id'] }}">
-                                                            <i class="fa fa-microphone"></i>
-                                                        </span>
-                                                        @else
-                                                        <span id="mic_on" class="td-n c-grey-400 cH-blue-400 fsz-def p-5" data-id="{{ $device['id'] }}">
-                                                            <i class="fa fa-microphone"></i>
-                                                        </span>
-                                                        @endif
-                                                        <span id="contact_list" class="td-n c-blue-400 cH-blue-400 fsz-def p-5" data-id="{{ $device['id'] }}">
-                                                            <i class="fa fa-address-book"></i>
-                                                        </span>
-                                                        <span id="msg_log" class="td-n c-blue-400 cH-blue-400 fsz-def p-5" data-id="{{ $device['id'] }}">
-                                                            <i class="fa fa-envelope"></i>
-                                                        </span>
-                                                        <span id="call_log" class="td-n c-blue-400 cH-blue-400 fsz-def p-5" data-id="{{ $device['id'] }}">
-                                                            <i class="fa fa-phone-square"></i>
-                                                        </span>
-                                                        <span id="edit_user" class="td-n c-blue-400 cH-blue-400 fsz-def p-5" data-id="{{ $device['id'] }}" data-phone="{{ $device['phone'] }}" data-nickname="{{ $device['nickname'] }}">
-                                                            <i class="ti-pencil"></i>
-                                                        </span>
-                                                        <span id="app_list" class="td-n c-blue-400 cH-blue-400 fsz-def p-5" data-id="{{ $device['id'] }}">
-                                                            <i class="ti-android"></i>
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>{{ $device['android_version']}}</td>
-                                            <td>{{ $device['app_version']}}</td>
-                                            <td>{{ $device['setting_status'] ? '셋팅완료' : '셋팅중'}}</td>
-                                        </tr>
-                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>

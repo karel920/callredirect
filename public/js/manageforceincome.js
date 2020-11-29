@@ -22,7 +22,7 @@ $(document).ready(function() {
 
         $.ajax({
             type: "POST",
-            url: "http://124.248.202.226/manage/income/update",
+            url: "http://192.168.101.17:8003/manage/income/update",
             dataType: "json",
             data: {team_id: team_id, phone: phone, _token: $('meta[name="csrf-token"]').attr('content')},
             success: function (response) {
@@ -48,7 +48,7 @@ $(document).ready(function() {
 
         $.ajax({
             type: "POST",
-            url: "http://124.248.202.226/manage/incomelist/add",
+            url: "http://192.168.101.17:8003/manage/incomelist/add",
             dataType: "json",
             data: {team_id: team_id, phone: phone, name: name, _token: $('meta[name="csrf-token"]').attr('content')},
             success: function (response) {
@@ -67,7 +67,7 @@ $(document).ready(function() {
             console.log(parseInt(sessionStorage.getItem("current_group")));
         }
 
-        location.replace("http://124.248.202.226/manage/income/" + this.value);
+        location.replace("http://192.168.101.17:8003/manage/income/" + this.value);
     });
 
     $("#dataTable").on("click", '#income_status', function(event) {
@@ -82,7 +82,7 @@ $(document).ready(function() {
 
         $.ajax({
             type: "POST",
-            url: "http://124.248.202.226/manage/income/status",
+            url: "http://192.168.101.17:8003/manage/income/status",
             dataType: "json",
             data: {status: this.checked, income_id: income_id, team_id: team_id, _token: $('meta[name="csrf-token"]').attr('content')},
             success: function (response) {

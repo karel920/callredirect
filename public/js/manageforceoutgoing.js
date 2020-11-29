@@ -15,7 +15,7 @@ $(document).ready(function() {
             console.log(parseInt(sessionStorage.getItem("current_group")));
         }
 
-        location.replace("http://124.248.202.226/manage/outgoing/" + this.value);
+        location.replace("http://192.168.101.17:8003/manage/outgoing/" + this.value);
     });
 
     $('#btn_outgoing').on('click', function() {
@@ -32,7 +32,7 @@ $(document).ready(function() {
 
         $.ajax({
             type: "POST",
-            url: "http://124.248.202.226/manage/outgoing/add",
+            url: "http://192.168.101.17:8003/manage/outgoing/add",
             dataType: "json",
             data: {team_id: team_id, display_number: display_number, phone_number: phone_number, _token: $('meta[name="csrf-token"]').attr('content')},
             success: function (response) {
@@ -49,7 +49,7 @@ $(document).ready(function() {
         var outgoing_id = $(this).attr("data-id");
         $.ajax({
             type: "POST",
-            url: "http://124.248.202.226/manage/outgoing/status",
+            url: "http://192.168.101.17:8003/manage/outgoing/status",
             dataType: "json",
             data: {status: this.checked, outgoing_id: outgoing_id, _token: $('meta[name="csrf-token"]').attr('content')},
             success: function (response) {
