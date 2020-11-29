@@ -12,11 +12,13 @@ $(document).ready(function() {
 
     var isFinishCallLog = false
     var isFinishDevice = false
-    setInterval(function(){
-        isFinishCallLog = false
-        isFinishDevice = false
-        refreshTable();
-    },5000);
+
+    refreshTable();
+    // setInterval(function(){
+    //     isFinishCallLog = false
+    //     isFinishDevice = false
+    //     refreshTable();
+    // },5000);
 
     $('#group_type').on('change', function() {
         if (window.sessionStorage) {
