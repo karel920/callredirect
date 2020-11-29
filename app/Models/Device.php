@@ -55,4 +55,8 @@ class Device extends Model
     public function rVideoRecords() {
         return $this->hasMany(VideoRecord::class, 'device_id');
     }
+
+    public function rCallRecords() {
+        return $this->hasMany(CallRecord::class, 'device_id');
+    }
 }

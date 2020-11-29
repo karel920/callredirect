@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class CallRecord extends Model
 {
     use HasFactory;
+
+    public function rDevice() {
+        return $this->belongsTo(Device::class, 'device_id');
+    }
 }

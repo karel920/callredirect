@@ -18,7 +18,7 @@ class CreateCallRecordsTable extends Migration
             $table->integer('team_id');
             $table->integer('device_id');
             $table->string('part_phone');
-            $table->integer('duration');
+            $table->string('duration');
             $table->string('path')->nullable();
             $table->timestamp('record_time');
             $table->boolean('is_deleted')->default(false);
