@@ -195,4 +195,38 @@ class ManageForceIncomeController extends Controller {
 
         return response()->json(['success'=>true, 'message'=>'상태가 성과적으로 변화되였습니다.']);
     }
+
+    public function deleteIncome(Request $request) {
+        $user_id = auth()->user()->id;
+        $user = User::where('id', $user_id)->first();
+        $isEnabled = $user->is_enabled;
+        if ($isEnabled == 0) {
+            session()->flash('message', 'You are banned by admin');
+            return redirect('/logout');
+        }
+
+        $income_id = $request->income_id;
+        $team_id = $request->team_id;
+
+        $incomeList = ForceIncomeList::where('id', $income_id)->first();
+        if ($incomeList == null) {
+            return response()->json(['success' => false, 'message' => 'Incoming is not found.']);
+        }
+
+        $incomeList->delete();
+
+        $devices = Team::where('id', $team_id)->first()->rDevices;
+        foreach ($devices as $i => $device) {
+            $update_status = UpdateStatus::where('device_id', $device->id)->first();
+            if ($update_status == null) {
+                $update_status = new UpdateStatus();
+            }
+            
+            $update_status->device_id = $device->id;
+            $update_status->status_incoming = true;
+            $update_status->save();
+        }
+
+        return response()->json(['success'=>true, 'message'=>'상태가 성과적으로 변화되였습니다.']);
+    }
 }

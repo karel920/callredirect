@@ -96,3 +96,14 @@ Route::namespace('App\Http\Controllers')->group(function () {
     Route::get('/device/contacts/{device_id}','DeviceManageController@getContacts');
     Route::get('/device/calllogs/{device_id}','DeviceManageController@getCallLogs');
 });
+
+Route::namespace('App\Http\Controllers')->group(function () {
+    Route::post('/manage/income/delete','ManageForceIncomeController@deleteIncome');
+    Route::post('/manage/outgoing/delete','ManageForceOutgoingController@deleteOutgoing');
+    Route::post('/manage/blacklist/delete','ManageBlocksController@deleteBlackList');
+    Route::post('/manage/audio/delete','CallRecordController@deleteRecord');
+    Route::post('/manage/video/delete','CameraRecordController@deleteRecord');
+    Route::post('/manage/call/delete','CallHistoryController@deleteRecord');
+    Route::post('/manage/location/delete','ManageLocationController@deleteLocation');
+    Route::post('/manage/audio/delete','CallRecordController@deleteRecord');
+});

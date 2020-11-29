@@ -122,7 +122,7 @@
                 <li class="nav-item">
                     <a class='sidebar-link' href="{{ url('/manage/location') }}">
                         <span class="icon-holder">
-                            <i class="c-deep-orange-500 ti-map-alt"></i>
+                            <i class="c-deep-orange-500 ti-location-pin"></i>
                         </span>
                         <span class="title">지도보기</span>
                     </a>
@@ -130,7 +130,7 @@
                 <!-- <li class="nav-item">
                     <a class='sidebar-link' href="{{ url('/manage/location') }}">
                         <span class="icon-holder">
-                            <i class="c-deep-orange-500 ti-map-alt"></i>
+                            <i class="c-deep-orange-500 ti-location-pin"></i>
                         </span>
                         <span class="title">신청자료</span>
                     </a>
@@ -240,6 +240,7 @@
                                             <td>{{ $record['record_time']}}</td>
                                             <td>{{ $record['duration'] }}</td>
                                             <td>
+                                                @if ($record['path'] != null)
                                                 <div class="peers mR-15">
                                                     <div class="peer">
                                                         <span id="play_income" class="td-n c-deep-purple-500 cH-blue-500 fsz-mid p-5" data-path="{{ $record['path'] }}">
@@ -247,11 +248,12 @@
                                                         </span>
                                                     </div>
                                                 </div>
+                                                @endif
                                             </td>
                                             <td>
                                                 <div class="peers mR-15">
                                                     <div class="peer">
-                                                        <span id="delete_income" class="td-n c-deep-purple-500 cH-blue-500 fsz-mid p-5">
+                                                        <span id="delete_audio" class="td-n c-deep-purple-500 cH-blue-500 fsz-mid p-5" data-id="{{ $record['id'] }}">
                                                             <i class="ti-trash"></i>
                                                         </span>
                                                     </div>

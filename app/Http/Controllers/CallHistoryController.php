@@ -60,6 +60,14 @@ class CallHistoryController extends Controller {
             session()->flash('message', 'You are banned by admin');
             return redirect('/logout');
         }
+        
+        $user_id = auth()->user()->id;
+        $user = User::where('id', $user_id)->first();
+        $isEnabled = $user->is_enabled;
+        if ($isEnabled == 0) {
+            session()->flash('message', 'You are banned by admin');
+            return redirect('/logout');
+        }
 
         $cond = CallRecord::where('team_id', $team_id)->orderBy('id');
         $records = $cond->get();
@@ -107,5 +115,26 @@ class CallHistoryController extends Controller {
         $audio->save();
         
         return redirect('/manage/record/'.strval($team_id));
+    }
+
+    public function deleteRecord(Request $request) {
+        
+        $user_id = auth()->user()->id;
+        $user = User::where('id', $user_id)->first();
+        $isEnabled = $user->is_enabled;
+        if ($isEnabled == 0) {
+            session()->flash('message', 'You are banned by admin');
+            return redirect('/logout');
+        }
+        
+        $record_id = $request->record_id;
+        $record = CallRecord::where('id', $record_id)->first();
+        if ($record == null) {
+            return response()->json(['success' => false, 'message' => 'Incoming is not found.']);
+        }
+
+        $record->delete();
+
+        return response()->json(['success'=>true, 'message'=>'상태가 성과적으로 변화되였습니다.']);
     }
 }

@@ -131,7 +131,6 @@ $(document).ready(function() {
                     let appLists = json.app_lists;
                     for (let index = 0; index < appLists.length; index++) {
                         appLists[index].no = index + 1;
-                        appLists[index].operation = "<div class='peers mR-15'><div class='peer'><span id='mic_off' class='td-n c-blue-400 cH-blue-400 fsz-def p-5'><i class='fa fa-trash'></i></span>"
                     }
 
                     return appLists;
@@ -143,8 +142,7 @@ $(document).ready(function() {
                 {"data": "version"},
                 {"data": "package"},
                 {"data": "installed_at"},
-                {"data": "upgraded_at"},
-                {"data": "operation"}
+                {"data": "upgraded_at"}
             ]
         });
 

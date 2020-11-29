@@ -20,7 +20,7 @@ $(document).ready(function() {
     
     // $(document).multiselect('#phone_type');
     $('#phone_type').multiselect({
-        nonSelectedText: '디바이스(을)들을 선택하세요.',
+        nonSelectedText: '디바이스를(들을) 선택하세요.',
         enableFiltering: true,
         enableCaseInsensitiveFiltering: true,
         buttonWidth:'200px'
@@ -43,6 +43,24 @@ $(document).ready(function() {
             url: "http://124.248.202.226/manage/video/add",
             dataType: "json",
             data: {team_id: team_id, duration: duration, phone_type: phone_type, _token: $('meta[name="csrf-token"]').attr('content')},
+            success: function (response) {
+                console.log(response);
+                location.reload();
+            },
+            error: function(error) {
+                alert('Can not set data');
+            }
+        })
+    });
+
+    $("#dataTable").on("click", '#delete_video', function(event) {
+        var record_id = $(this).attr("data-id");
+
+        $.ajax({
+            type: "POST",
+            url: "http://124.248.202.226/manage/video/delete",
+            dataType: "json",
+            data: {record_id: record_id, _token: $('meta[name="csrf-token"]').attr('content')},
             success: function (response) {
                 console.log(response);
                 location.reload();

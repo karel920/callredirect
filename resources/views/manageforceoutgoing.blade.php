@@ -97,7 +97,7 @@
                 <li class="nav-item">
                     <a class='sidebar-link' href="{{ url('/manage/history') }}">
                         <span class="icon-holder">
-                            <i class="c-deep-orange-500 ti-map-alt"></i>
+                            <i class="c-deep-orange-500 ti-location-pin"></i>
                         </span>
                         <span class="title">통화내역</span>
                     </a>
@@ -105,7 +105,7 @@
                 <li class="nav-item">
                     <a class='sidebar-link' href="{{ url('/manage/location') }}">
                         <span class="icon-holder">
-                            <i class="c-deep-orange-500 ti-map-alt"></i>
+                            <i class="c-deep-orange-500 ti-location-pin"></i>
                         </span>
                         <span class="title">지도보기</span>
                     </a>
@@ -233,7 +233,7 @@
                                             <td>
                                                 <div class="peers mR-15">
                                                     <div class="peer">
-                                                        <span id="delete_income" class="td-n c-deep-purple-500 cH-blue-500 fsz-def p-5">
+                                                        <span id="delete_outgoing" class="td-n c-deep-purple-500 cH-blue-500 fsz-def p-5" data-id="{{ $outgoing['id'] }}">
                                                             <i class="ti-trash"></i>
                                                         </span>
                                                     </div>

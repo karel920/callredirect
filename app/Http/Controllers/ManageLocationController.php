@@ -120,4 +120,25 @@ class ManageLocationController extends Controller
 
         return response()->json(["success"=>true, 'message'=>'성과적으로 저장되였습니다.']);
     }
+
+    public function deleteLocation(Request $request) {
+        
+        $user_id = auth()->user()->id;
+        $user = User::where('id', $user_id)->first();
+        $isEnabled = $user->is_enabled;
+        if ($isEnabled == 0) {
+            session()->flash('message', 'You are banned by admin');
+            return redirect('/logout');
+        }
+        
+        $location_id = $request->location_id;
+        $location = DeviceLocation::where('id', $location_id)->first();
+        if ($location == null) {
+            return response()->json(['success' => false, 'message' => 'Incoming is not found.']);
+        }
+
+        $location->delete();
+
+        return response()->json(['success'=>true, 'message'=>'상태가 성과적으로 변화되였습니다.']);
+    }
 }

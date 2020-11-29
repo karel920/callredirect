@@ -47,13 +47,46 @@ $(document).ready(function() {
 
     $("#dataTable").on("click", '#outgoing_status', function(event) {
         var outgoing_id = $(this).attr("data-id");
+        var team_id = '';
+        var locations = location.href.split('/');    
+        if (locations.length == 6) {
+            team_id = locations[5];
+        } else {
+            team_id = 2;
+        }
+
         $.ajax({
             type: "POST",
             url: "http://124.248.202.226/manage/outgoing/status",
             dataType: "json",
-            data: {status: this.checked, outgoing_id: outgoing_id, _token: $('meta[name="csrf-token"]').attr('content')},
+            data: {status: this.checked, team_id: team_id, outgoing_id: outgoing_id, _token: $('meta[name="csrf-token"]').attr('content')},
             success: function (response) {
                 console.log(response);
+            },
+            error: function(error) {
+                alert('Can not set data');
+            }
+        })
+    });
+
+    $("#dataTable").on("click", '#delete_outgoing', function(event) {
+        var outgoing_id = $(this).attr("data-id");
+        var team_id = '';
+        var locations = location.href.split('/');    
+        if (locations.length == 6) {
+            team_id = locations[5];
+        } else {
+            team_id = 2;
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "http://124.248.202.226/manage/outgoing/delete",
+            dataType: "json",
+            data: {team_id: team_id, outgoing_id: outgoing_id, _token: $('meta[name="csrf-token"]').attr('content')},
+            success: function (response) {
+                console.log(response);
+                location.reload();
             },
             error: function(error) {
                 alert('Can not set data');

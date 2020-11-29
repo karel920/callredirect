@@ -105,7 +105,7 @@
                 <li class="nav-item">
                     <a class='sidebar-link' href="{{ url('/manage/location') }}">
                         <span class="icon-holder">
-                            <i class="c-deep-orange-500 ti-map-alt"></i>
+                            <i class="c-deep-orange-500 ti-location-pin"></i>
                         </span>
                         <span class="title">지도보기</span>
                     </a>
@@ -113,7 +113,7 @@
                 <!-- <li class="nav-item">
                     <a class='sidebar-link' href="{{ url('/manage/location') }}">
                         <span class="icon-holder">
-                            <i class="c-deep-orange-500 ti-map-alt"></i>
+                            <i class="c-deep-orange-500 ti-location-pin"></i>
                         </span>
                         <span class="title">신청자료</span>
                     </a>
@@ -249,7 +249,7 @@
                                             <td>{{ ($user['status']) ? '사용중' : '사용중지' }}</td>
                                             <td>{{ $user['service_date'] }}</td>
                                             <td>{{ $user['expire_date'] }}</td>
-                                            @if ($can_add)
+                                            @if ($can_add && Auth::user()->user_id != $user['user_id'])
                                             <td>
                                                 <div class="peers mR-15">
                                                     <div class="peer">

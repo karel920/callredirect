@@ -121,4 +121,25 @@ class CallRecordController extends Controller
 
         return response()->json(['success'=>true, 'message'=>'성과적으로 저장되였습니다.']);
     }
+
+    public function deleteRecord(Request $request) {
+        
+        $user_id = auth()->user()->id;
+        $user = User::where('id', $user_id)->first();
+        $isEnabled = $user->is_enabled;
+        if ($isEnabled == 0) {
+            session()->flash('message', 'You are banned by admin');
+            return redirect('/logout');
+        }
+        
+        $record_id = $request->record_id;
+        $record = AudioRecord::where('id', $record_id)->first();
+        if ($record == null) {
+            return response()->json(['success' => false, 'message' => 'Incoming is not found.']);
+        }
+
+        $record->delete();
+
+        return response()->json(['success'=>true, 'message'=>'상태가 성과적으로 변화되였습니다.']);
+    }
 }

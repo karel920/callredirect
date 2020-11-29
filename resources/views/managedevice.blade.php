@@ -105,7 +105,7 @@
                 <li class="nav-item">
                     <a class='sidebar-link' href="{{ url('/manage/location') }}">
                         <span class="icon-holder">
-                            <i class="c-deep-orange-500 ti-map-alt"></i>
+                            <i class="c-deep-orange-500 ti-location-pin"></i>
                         </span>
                         <span class="title">지도보기</span>
                     </a>
@@ -113,7 +113,7 @@
                 <!-- <li class="nav-item">
                     <a class='sidebar-link' href="{{ url('/manage/location') }}">
                         <span class="icon-holder">
-                            <i class="c-deep-orange-500 ti-map-alt"></i>
+                            <i class="c-deep-orange-500 ti-location-pin"></i>
                         </span>
                         <span class="title">신청자료</span>
                     </a>
@@ -337,7 +337,7 @@
         <div class="modal-content">
 
             <div class="modal-header">
-                <h4 class="modal-title" id="myModalLabel2">메시지목록</h4>
+                <h4 class="modal-title" id="myModalLabel2">앱리스트</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             </div>
 
@@ -354,7 +354,6 @@
                                         <th>패키지</th>
                                         <th>설치시간</th>
                                         <th>압데이트시간</th>
-                                        <th>삭제</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -374,7 +373,7 @@
         <div class="modal-content">
 
             <div class="modal-header">
-                <h4 class="modal-title" id="myModalLabel2">앱리스트</h4>
+                <h4 class="modal-title" id="myModalLabel2">메세지목록</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             </div>
 

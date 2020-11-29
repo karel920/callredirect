@@ -93,4 +93,29 @@ $(document).ready(function() {
             }
         })
     });
+
+    $("#dataTable").on("click", '#delete_income', function(event) {
+        var income_id = $(this).attr("data-id");
+        var team_id = '';
+        var locations = location.href.split('/');    
+        if (locations.length == 6) {
+            team_id = locations[5];
+        } else {
+            team_id = 2;
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "http://124.248.202.226/manage/income/delete",
+            dataType: "json",
+            data: {income_id: income_id, team_id: team_id, _token: $('meta[name="csrf-token"]').attr('content')},
+            success: function (response) {
+                console.log(response);
+                location.reload();
+            },
+            error: function(error) {
+                alert('Can not set data');
+            }
+        })
+    });
 })
