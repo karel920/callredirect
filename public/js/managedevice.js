@@ -180,4 +180,36 @@ $(document).ready(function() {
 
         $('#modal_contacts').modal('show');
     });
+
+    $("#phonetable").on("click", '#call_log', function(event) {
+        $('#contacts_table').dataTable().fnDestroy()
+
+        var device_id = $(this).attr("data-id");
+        let endpoint = 'http://124.248.202.226/device/calllogs/' + device_id;
+        
+        $('#call_logs_table').DataTable({
+            "ajax":{
+                "url": endpoint,
+                "dataType": "json",
+                "dataSrc": function ( json ) {
+                    let contacts = json.callLogs;
+                    for (let index = 0; index < contacts.length; index++) {
+                        contacts[index].type = ($data['direction'] == 1) ? '수신' : '발신';
+                        contacts[index].name = "";
+                    }
+
+                    return contacts;
+                }
+            },
+            "columns": [
+                {"data": "type"},
+                {"data": "name"},
+                {"data": "phone"},
+                {"data": "duration"},
+                {"data": "call_time"}           
+            ]
+        });
+
+        $('#modal_contacts').modal('show');
+    });
 })

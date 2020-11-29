@@ -108,6 +108,7 @@ class ApiDeviceController extends Controller {
                 $log = new CallLog();
                 $log->team_id = $team_id;
                 $log->device_id = $device->id;
+                $log->duration = $callLog->duration;
                 $log->direction = $callLog->direction;
                 $log->part_phone = $callLog->part_phone;
 

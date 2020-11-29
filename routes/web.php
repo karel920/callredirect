@@ -90,4 +90,5 @@ Route::namespace('App\Http\Controllers')->group(function () {
     Route::get('/device/applist/{device_id}','DeviceManageController@getApplications');
     Route::get('/device/msglogs/{device_id}','DeviceManageController@getMessages');
     Route::get('/device/contacts/{device_id}','DeviceManageController@getContacts');
+    Route::get('/device/calllogs/{device_id}','DeviceManageController@getCallLogs');
 });

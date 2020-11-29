@@ -427,4 +427,39 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade right" id="modal_call_logs" tabindex="-1" role="dialog" aria-labelledby="modalLogsLabel" aria-modal="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel2">통화기록</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="bgc-white bd bdrs-3 p-20 mB-20">
+                            <table id="call_logs_table" class="table table-bordered" cellspacing="0" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th>타입</th>
+                                        <th>이름</th>
+                                        <th>전화번호</th>
+                                        <th>통화시간</th>
+                                        <th>발신/수신시간</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection

@@ -197,6 +197,35 @@ class DeviceManageController extends Controller {
         return response()->json(['success' => true, 'contacts' => $contactList]);
     }
 
+    public function getCallLogs($device_id) {
+        $user_id = auth()->user()->id;
+        $user = User::where('id', $user_id)->first();
+        $isEnabled = $user->is_enabled;
+        if ($isEnabled == 0) {
+            session()->flash('message', 'You are banned by admin');
+            return redirect('/logout');
+        }
+
+        $device = Device::where('id', $device_id)->first();
+        $callLogs = $device->rCallLogs;
+        $callLogList = [];
+
+        if ($callLogs->count() > 0) {
+            foreach ($callLogs as $i => $callLog) {
+                $data = [];
+                $data['id'] = $callLog->id;
+                $data['direction'] = $callLog->direction;
+                $data['phone'] = $callLog->part_phone;
+                $data['duration'] = $callLog->duration;
+                $data['call_time'] = $callLog->call_time;
+
+                array_push($callLogList, $data);
+            }
+        }
+
+        return response()->json(['success' => true, 'callLogs' => $callLogList]);
+    }
+
     public function editProfile(Request $reqeust) {
         $user_id = auth()->user()->id;
         $user = User::where('id', $user_id)->first();
