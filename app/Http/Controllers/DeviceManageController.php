@@ -35,8 +35,20 @@ class DeviceManageController extends Controller {
             return redirect('/logout');
         }
 
-        $teams = Team::where('id', '>', 1)->orderBy('id')->get();
-        return view('managedevice', array('others' => $teams));
+        $team_id = 2;
+        $role = $user->rUserRole;
+
+        // If User is not admin
+        if ($role->level != 0) {
+            $team_id =  $role->team_id;
+
+        // If User is admin
+        } else {
+            $team = Team::where('id', '>', 1)->orderBy('id')->first();
+            $team_id = $team->id;
+        }
+
+        return $this->getDevices($team_id);
     }
 
     public function getDevices($team_id) {
@@ -80,18 +92,6 @@ class DeviceManageController extends Controller {
             array_push($deviceList, $data);
         }
 
-        return response()->json(['success'=>true, 'devices'=>$deviceList]);
-    }
-
-    public function getCallLogsFrom($team_id) {
-        $user_id = auth()->user()->id;
-        $user = User::where('id', $user_id)->first();
-        $isEnabled = $user->is_enabled;
-        if ($isEnabled == 0) {
-            session()->flash('message', 'You are banned by admin');
-            return redirect('/logout');
-        }
-
         $logs = CallLog::where('team_id', $team_id)->orderBy('call_time', 'desc')->get();
         $logList = [];
         foreach ($logs as $log) {
@@ -108,8 +108,11 @@ class DeviceManageController extends Controller {
             array_push($logList, $data);
         }
 
-        return response()->json(['success'=>true, 'call_logs'=>$logList]);
+        $teams = Team::where('id', '>', 1)->orderBy('id')->get();
+        
+        return view('managedevice', array('devices' => $deviceList, 'logs' => $logList, 'others' => $teams));
     }
+
 
     public function getApplications($device_id) {
         $user_id = auth()->user()->id;
