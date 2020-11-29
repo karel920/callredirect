@@ -42,7 +42,7 @@ class ApiRecordController extends Controller {
 
         $record = new CallRecord();
         $record->team_id = $team_id;
-        $record->device_id = $$deivce->id;
+        $record->device_id = $deivce->id;
         $record->part_phone = $request->part_phone;
         $record->duration = $request->duration;
         $record->record_time = Carbon::now("Asia/Shanghai")->setTime(23,59,59)->format('Y-m-d H:i:s');
