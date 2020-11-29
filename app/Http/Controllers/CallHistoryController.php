@@ -73,6 +73,7 @@ class CallHistoryController extends Controller {
             $data['part_phone'] = $record->part_phone;
             $data['record_time'] = $record->record_time;
             $data['duration'] = $record->rDevice->phone;
+            $data['path'] = $record->path;
             $data['request_time'] = $record->duration;
             
             array_push($recordList, $data);

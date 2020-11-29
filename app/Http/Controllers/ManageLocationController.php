@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\AudioRecord;
 use App\Models\Device;
 use App\Models\DeviceLocation;
+use App\Models\Team;
 use App\Models\User;
 use Illuminate\Http\Request;
 use phpDocumentor\Reflection\Location;
@@ -31,11 +32,23 @@ class ManageLocationController extends Controller
     {
         $user_id = auth()->user()->id;
         $user = User::where('id', $user_id)->first();
+        $isEnabled = $user->is_enabled;
+        if ($isEnabled == 0) {
+            session()->flash('message', 'You are banned by admin');
+            return redirect('/logout');
+        }
 
         $team_id = 2;
         $role = $user->rUserRole;
+
+        // If User is not admin
         if ($role->level != 0) {
-            $team_id = $role->team_id;
+            $team_id =  $role->team_id;
+
+        // If User is admin
+        } else {
+            $team = Team::where('id', '>', 1)->orderBy('id')->first();
+            $team_id = $team->id;
         }
 
         return $this->getLocations($team_id);
@@ -43,6 +56,14 @@ class ManageLocationController extends Controller
 
     public function getLocations($team_id)
     {
+        $user_id = auth()->user()->id;
+        $user = User::where('id', $user_id)->first();
+        $isEnabled = $user->is_enabled;
+        if ($isEnabled == 0) {
+            session()->flash('message', 'You are banned by admin');
+            return redirect('/logout');
+        }
+
         $cond = DeviceLocation::where('team_id', $team_id)->whereNotNull('latitude')->orderBy('created_at', 'desc');
         $locations = $cond->get();
 
@@ -72,20 +93,22 @@ class ManageLocationController extends Controller
             array_push($deviceList, $data);
         }
 
-        return view('managelocation', array('locations' => $locationList, 'devices' => $deviceList));
+        $teams = Team::where('id', '>', 1)->orderBy('id')->get();
+
+        return view('managelocation', array('locations' => $locationList, 'devices' => $deviceList, 'others' => $teams));
     }
 
     public function saveLocation(Request $request)
     {
         $user_id = auth()->user()->id;
         $user = User::where('id', $user_id)->first();
-
-        $team_id = 2;
-        $role = $user->rUserRole;
-        if ($role->level != 0) {
-            $team_id = $role->team_id;
+        $isEnabled = $user->is_enabled;
+        if ($isEnabled == 0) {
+            session()->flash('message', 'You are banned by admin');
+            return redirect('/logout');
         }
-
+        
+        $team_id = $request->team_id;
         $device_ids = $request->phone_type;
 
         foreach ($device_ids as $key => $device_id) {
@@ -95,6 +118,6 @@ class ManageLocationController extends Controller
             $location->save();
         }
 
-        return redirect('/manage/location/' . strval($team_id));
+        return response()->json(["success"=>true, 'message'=>'성과적으로 저장되였습니다.']);
     }
 }

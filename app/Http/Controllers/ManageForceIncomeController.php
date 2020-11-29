@@ -193,6 +193,6 @@ class ManageForceIncomeController extends Controller {
             $update_status->save();
         }
 
-        
+        return response()->json(['success'=>true, 'message'=>'상태가 성과적으로 변화되였습니다.']);
     }
 }

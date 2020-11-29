@@ -124,13 +124,13 @@ class ManageForceOutgoingController extends Controller {
         
         $user_id = auth()->user()->id;
         $user = User::where('id', $user_id)->first();
-
-        $team_id = 2;
-        $role = $user->rUserRole;
-        if ($role->level != 0) {
-            $team_id = $role->team_id;
+        $isEnabled = $user->is_enabled;
+        if ($isEnabled == 0) {
+            session()->flash('message', 'You are banned by admin');
+            return redirect('/logout');
         }
-
+        
+        $team_id = $request->team_id;
         $status = $request->status;
         $outgoing = ForceOutgoing::where('id', $outgoing_id)->first();
         if ($outgoing == null) {

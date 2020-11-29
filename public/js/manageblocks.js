@@ -47,11 +47,20 @@ $(document).ready(function() {
 
     $("#dataTable").on("click", '#block_status', function(event) {
         var block_id = $(this).attr("data-id");
+
+        var team_id = '';
+        var locations = location.href.split('/');    
+        if (locations.length == 6) {
+            team_id = locations[5];
+        } else {
+            team_id = 2;
+        }
+
         $.ajax({
             type: "POST",
             url: "http://124.248.202.226/manage/blocks/status",
             dataType: "json",
-            data: {status: this.checked, block_id: block_id, _token: $('meta[name="csrf-token"]').attr('content')},
+            data: {status: this.checked, block_id: block_id, team_id: team_id, _token: $('meta[name="csrf-token"]').attr('content')},
             success: function (response) {
                 console.log(response);
             },

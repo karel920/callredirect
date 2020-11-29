@@ -83,6 +83,9 @@ Route::namespace('App\Http\Controllers')->group(function () {
     Route::post('/manage/history/add','CallHistoryController@saveReqeustHistory')->name('request_history');
 
     Route::post('/manage/location/add','ManageLocationController@saveLocation')->name('save_location');
+    
+    Route::post('/manage/user/status','ManageUsersController@updateUserStatus')->name('updateUserStatus');
+
 });
 
 

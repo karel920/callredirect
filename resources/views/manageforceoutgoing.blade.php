@@ -97,7 +97,7 @@
                 <li class="nav-item">
                     <a class='sidebar-link' href="{{ url('/manage/history') }}">
                         <span class="icon-holder">
-                            <i class="c-deep-orange-500 ti-bell"></i>
+                            <i class="c-deep-orange-500 ti-map-alt"></i>
                         </span>
                         <span class="title">통화내역</span>
                     </a>
@@ -105,7 +105,7 @@
                 <li class="nav-item">
                     <a class='sidebar-link' href="{{ url('/manage/location') }}">
                         <span class="icon-holder">
-                            <i class="c-deep-orange-500 ti-bell"></i>
+                            <i class="c-deep-orange-500 ti-map-alt"></i>
                         </span>
                         <span class="title">지도보기</span>
                     </a>

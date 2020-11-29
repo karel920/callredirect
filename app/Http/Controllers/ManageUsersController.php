@@ -27,8 +27,13 @@ class ManageUsersController extends Controller {
      */
     public function index() {
         $can_add = true;
-        $user_id = auth()->user()->id;
-        $current_user = User::where('id', $user_id)->first();
+        $current_user = auth()->user();
+        $isEnabled = $current_user->is_enabled;
+        if ($isEnabled == 0) {
+            session()->flash('message', 'You are banned by admin');
+            return redirect('/logout');
+        }
+
         $current_role = $current_user->rUserRole;
         
         if ($current_role->level == 0) {
@@ -81,6 +86,11 @@ class ManageUsersController extends Controller {
 
     public function registerUser(Request $request) {
         $current_user = auth()->user();
+        $isEnabled = $current_user->is_enabled;
+        if ($isEnabled == 0) {
+            session()->flash('message', 'You are banned by admin');
+            return redirect('/logout');
+        }
 
         $userId = $request->user_id;
         $password = $request->password;
@@ -99,18 +109,20 @@ class ManageUsersController extends Controller {
             return response()->json(['success'=>false, 'message'=>'사용자아이디가 이미 존재합니다.']);
         }
 
-        $team = new Team();
-        $team->name = $team_name;
-        $team->save();
-
         $role = new UserRole();
-        $role->team_id = $team->id;
-
         $current_role = User::where('id', $current_user->id)->first()->rUserRole;
+
         if ($current_role->level == 0) {
             $role->level = 1;
+            
+            $team = new Team();
+            $team->name = $team_name;
+            $team->save();
+
+            $role->team_id = $team->id;
         } else {
             $role->level = 2;
+            $role->team_id = $current_role->team_id;
         }
 
         $role->save();
@@ -124,5 +136,42 @@ class ManageUsersController extends Controller {
         $user->save();
 
         return redirect('/manage/users');
+    }
+
+    public function updateUserStatus(Request $request) {
+        $user = auth()->user();
+        $isEnabled = $user->is_enabled;
+        if ($isEnabled == 0) {
+            session()->flash('message', 'You are banned by admin');
+            return redirect('/logout');
+        }
+
+        $status = $request->status;
+        $user_id = $request->user_id;
+        $child = User::where('id', $user_id)->first();
+
+        if ($child == null) {
+            return response()->json(['success'=>false, 'message'=>'사용자가 존재하지 않습니다.']);
+        }
+
+        $child->is_enabled = ($status == "false") ? false : true;
+        $child->save();
+
+        $role = $child->rUserRole;
+        if ($role->level == 1 && $status == "false") {
+            $roles = $role->rTeam->rUserRoles;
+            foreach ($roles as $i => $item) {
+                if ($item->id != $role->id) {
+                    $members = $item->rUsers;
+
+                    foreach ($members as $j => $member) {
+                        $member->is_enabled = false;
+                        $member->save();
+                    }
+                }
+            }
+        }
+
+        return response()->json(['success'=>true, 'message'=>'성과적으로 갱신되였습니다.']);
     }
 }

@@ -1,7 +1,8 @@
 @extends('layouts.master')
 
 @section('head')
-<script src="{{ asset('js/manageforceincome.js') }}"></script>
+<script src="{{ asset('js/manageuser.js') }}"></script>
+<link href="{{ asset('css/managedevice.css') }}" rel="stylesheet">
 @endsection
 
 @section('content')
@@ -104,7 +105,7 @@
                 <li class="nav-item">
                     <a class='sidebar-link' href="{{ url('/manage/location') }}">
                         <span class="icon-holder">
-                            <i class="c-deep-orange-500 ti-bell"></i>
+                            <i class="c-deep-orange-500 ti-map-alt"></i>
                         </span>
                         <span class="title">지도보기</span>
                     </a>
@@ -112,11 +113,19 @@
                 <!-- <li class="nav-item">
                     <a class='sidebar-link' href="{{ url('/manage/location') }}">
                         <span class="icon-holder">
-                            <i class="c-deep-orange-500 ti-bell"></i>
+                            <i class="c-deep-orange-500 ti-map-alt"></i>
                         </span>
                         <span class="title">신청자료</span>
                     </a>
                 </li> -->
+                <li class="nav-item">
+                    <a class='sidebar-link' href="{{ url('/logout') }}">
+                        <span class="icon-holder">
+                            <i class="c-deep-red-500 ti-export"></i>
+                        </span>
+                        <span class="title">로그아웃</span>
+                    </a>
+                </li>
             </ul>
         </div>
     </div>
@@ -176,12 +185,14 @@
                                             <input class="form-control" id="password" name="password" type="text">
                                         </div>
                                     </div>
+                                    @if(Auth::user()->rUserRole->level == 0)
                                     <div class="col-sm-4 col-md-2">
                                         <div class="md-form form-group">
                                             <label for="service_date" class="active">그룹명</label>
                                             <input class="form-control" id="team_name" name="team_name" type="text">
                                         </div>
                                     </div>
+                                    @endif
                                     <div class="col-sm-4 col-md-2">
                                         <div class="md-form form-group">
                                             <label for="service_date" class="active">발급날자</label>
@@ -216,7 +227,9 @@
                                             <th>상태</th>
                                             <th>발급날자</th>
                                             <th>유효기간</th>
+                                            @if($can_add)
                                             <th>조작</th>
+                                            @endif
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -236,15 +249,22 @@
                                             <td>{{ ($user['status']) ? '사용중' : '사용중지' }}</td>
                                             <td>{{ $user['service_date'] }}</td>
                                             <td>{{ $user['expire_date'] }}</td>
+                                            @if ($can_add)
                                             <td>
                                                 <div class="peers mR-15">
                                                     <div class="peer">
-                                                        <span id="delete_income" class="td-n c-deep-purple-500 cH-blue-500 fsz-def p-5" data-userId="{{ strval($user['id']) }}">
-                                                            <i class="ti-trash"></i>
-                                                        </span>
+                                                        <label class="switch" style="margin-bottom: 0.1em;">
+                                                            @if($user['is_enabled'])
+                                                            <input id="user_status" type="checkbox" data-userId="{{ strval($user['id']) }}" checked>
+                                                            @else
+                                                            <input id="user_status" type="checkbox" data-userId="{{ strval($user['id']) }}">
+                                                            @endif
+                                                            <span class="slider round"></span>
+                                                        </label>
                                                     </div>
                                                 </div>
                                             </td>
+                                            @endif
                                         </tr>
                                         @endforeach
                                     </tbody>
