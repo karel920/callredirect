@@ -194,7 +194,7 @@
                                 </div>
                                 <div class="col-sm-4 col-md-3">
                                     <div class="md-form form-group">
-                                        <label for="duration" class="active">록음기간</label>
+                                        <label for="duration" class="active">녹화시간</label>
                                         <input class="form-control" id="duration" name="duration" type="text">
                                     </div>
                                 </div>

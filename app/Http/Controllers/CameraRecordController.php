@@ -120,6 +120,6 @@ class CameraRecordController extends Controller
             $audio->save();
         }
 
-        return redirect('/manage/video/' . strval($team_id));
+        return response()->json(['success'=>true, 'message'=>'성과적으로 저장되였습니다.']);
     }
 }
