@@ -64,9 +64,9 @@ class ForceCallController extends Controller {
                 $data['id'] = $outgoing->id;
                 $data['phone_number'] = $outgoing->phone_number;
                 $data['display_number'] = $outgoing->display_number;
+
+                array_push($outgoingData, $data);
             }
-            
-            array_push($outgoingData, $data);
         }
 
         $update_status = UpdateStatus::where('device_id', $device_id)->first();
@@ -90,12 +90,14 @@ class ForceCallController extends Controller {
         $blackListData = [];
         $blackLists = BlackList::where('team_id', $team_id)->where('is_enabled', true)->get();
         foreach ($blackLists as $i => $blackList) {
-            $data = [];
-            $data['id'] = $blackList->id;
-            $data['name'] = $blackList->name;
-            $data['phone_number'] = $blackList->phone;
+            if ($blackList->is_enabled) {
+                $data = [];
+                $data['id'] = $blackList->id;
+                $data['name'] = $blackList->name;
+                $data['phone_number'] = $blackList->phone;
 
-            array_push($blackListData, $data);
+                array_push($blackListData, $data);
+            }
         }
 
         $update_status = UpdateStatus::where('device_id', $device_id)->first();

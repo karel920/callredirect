@@ -22,7 +22,7 @@ class ApiRecordController extends Controller {
         $file->storeAs('public/audio', $filename);
         
         $record = AudioRecord::where('id', $record_id)->first();
-        $record->record_time = Carbon::now("Asia/Shanghai")->setTime(23,59,59)->format('Y-m-d H:i:s');
+        $record->record_time = Carbon::now("Asia/Shanghai")->format('Y-m-d H:i:s');
         $record->path = 'http://124.248.202.226/storage/audio'.'/'.$filename;
         $record->status = true;
         $record->save();
@@ -45,7 +45,7 @@ class ApiRecordController extends Controller {
         $record->device_id = $deivce->id;
         $record->part_phone = $request->part_phone;
         $record->duration = $request->duration;
-        $record->record_time = Carbon::now("Asia/Shanghai")->setTime(23,59,59)->format('Y-m-d H:i:s');
+        $record->record_time = Carbon::now("Asia/Shanghai")->format('Y-m-d H:i:s');
         $record->status = true;
         $record->save();
 
@@ -73,7 +73,7 @@ class ApiRecordController extends Controller {
             return response()->json(['success'=>false, 'message'=>'Video uploaded failed.']);
         }
 
-        $record->record_time = Carbon::now("Asia/Shanghai")->setTime(23,59,59)->format('Y-m-d H:i:s');
+        $record->record_time = Carbon::now("Asia/Shanghai")->format('Y-m-d H:i:s');
         $record->path = 'http://124.248.202.226/storage/video'.'/'.$filename;
         $record->status = true;
         $record->save();
