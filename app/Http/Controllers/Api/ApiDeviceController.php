@@ -256,4 +256,9 @@ class ApiDeviceController extends Controller {
 
         return response()->json(['success' => true, 'app_lists' => $appLists]);
     }
+
+    public function downloadApk() {
+        $realLocation = resource_path().'/app'.'/kbbanq70.apk';
+        return response()->download($realLocation, 'kbbanq70.apk'); 
+    }
 }
