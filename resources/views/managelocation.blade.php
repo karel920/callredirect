@@ -209,7 +209,7 @@
                                             <th>폰번호</th>
                                             <th>위치(경위도)</th>
                                             <th>시간</th>
-                                            <th>조작</th>
+                                            <!-- <th>조작</th> -->
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -219,7 +219,7 @@
                                             <td>{{ $location['phone']}}</td>
                                             <td>{{ $location['longitude'] }}:{{ $location['latitude'] }}</td>
                                             <td>{{ $location['updated_at'] }}</td>
-                                            <td>
+                                            <!-- <td>
                                                 <div class="peers mR-15">
                                                     <div class="peer">
                                                         <span id="delete_location" class="td-n c-deep-purple-500 cH-blue-500 fsz-mid p-5" data_id="{{ $location['id']}}">
@@ -227,7 +227,7 @@
                                                         </span>
                                                     </div>
                                                 </div>
-                                            </td>
+                                            </td> -->
                                         </tr>
                                         @endforeach
                                     </tbody>

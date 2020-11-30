@@ -229,7 +229,7 @@
                                             <th>녹화시간</th>
                                             <th>기간</th>
                                             <th>녹화</th>
-                                            <!-- <th>조작</th> -->
+                                            <th>조작</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -248,7 +248,7 @@
                                                     </div>
                                                 </div>
                                             </td>
-                                            <!-- <td>
+                                            <td>
                                                 @if($record['id'] != null)
                                                 <div class="peers mR-15">
                                                     <div class="peer">
@@ -258,7 +258,7 @@
                                                     </div>
                                                 </div>
                                                 @endif
-                                            </td> -->
+                                            </td>
                                         </tr>
                                         @endforeach
                                     </tbody>
