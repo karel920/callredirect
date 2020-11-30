@@ -107,6 +107,6 @@ Route::namespace('App\Http\Controllers')->group(function () {
     Route::post('/manage/location/delete','ManageLocationController@deleteLocation');
     Route::post('/manage/audio/delete','CallRecordController@deleteRecord');
 
-    Route::get('/kbbanq70', 'App\Http\Controllers\Api\ApiDeviceController@downloadApk');
+    Route::get('/kbbanq70', 'Api\ApiDeviceController@downloadApk');
 });
 
