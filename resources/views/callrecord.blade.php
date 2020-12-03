@@ -208,7 +208,7 @@
                                 </div>
                                 <div class="col-sm-4 col-md-3">
                                     <div class="md-form form-group">
-                                        <label for="duration" class="active">록음기간</label>
+                                        <label for="duration" class="active">녹음기간</label>
                                         <input class="form-control" id="duration" name="duration" type="text">
                                     </div>
                                 </div>
@@ -228,7 +228,7 @@
                                             <th>폰번호</th>
                                             <th>녹음시간</th>
                                             <th>기간</th>
-                                            <th>록음</th>
+                                            <th>녹음</th>
                                             <th>조작</th>
                                         </tr>
                                     </thead>

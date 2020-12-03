@@ -192,7 +192,7 @@
         <main class='main-content bgc-grey-100'>
             <div id='mainContent'>
                 <div class="container-fluid">
-                    <h4 class="c-grey-900 mT-10 mB-30">통화록음데이터</h4>
+                    <h4 class="c-grey-900 mT-10 mB-30">통화녹음데이터</h4>
                     <div class="row">
                     <div class="col-md-12">
                             <div class="bgc-white bd bdrs-3 p-20 mB-20">
@@ -205,7 +205,7 @@
                                             <th>통화번호</th>
                                             <th>녹음시간</th>
                                             <th>기간</th>
-                                            <th>록음</th>
+                                            <th>녹음</th>
                                             <th>조작</th>
                                         </tr>
                                     </thead>
