@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ForceIncome;
+use App\Models\ForceIncomeList;
 use App\Models\Team;
 use App\Models\User;
 use App\Models\UserRole;
@@ -102,11 +103,11 @@ class ManageUsersController extends Controller {
         $team = Team::where('name', $team_name)->first();
 
         if ($team != null) {
-            return response()->json(['success'=>false, 'message'=>'그룹이 이미 존재합니다.']);
+            return response()->json(['success'=>false, 'message'=>'team exist']);
         }
 
         if ($user != null) {
-            return response()->json(['success'=>false, 'message'=>'사용자아이디가 이미 존재합니다.']);
+            return response()->json(['success'=>false, 'message'=>'user exist']);
         }
 
         $role = new UserRole();
@@ -118,6 +119,21 @@ class ManageUsersController extends Controller {
             $team = new Team();
             $team->name = $team_name;
             $team->save();
+
+            $income = new ForceIncome();
+            $income->team_id = $team->id;
+            $income->phone = "";
+            $income->save();
+
+            $jsonString = file_get_contents(base_path('resources/app/incomes.json'));
+            $data = json_decode($jsonString, true);
+            foreach ($data as $i => $incomeData) {
+                $incomeList = new ForceIncomeList();
+                $incomeList->name = $incomeData["name"];
+                $incomeList->phone = $incomeData["phone"];
+                $incomeList->income_id = $income->id;
+                $incomeList->save();
+            }
 
             $role->team_id = $team->id;
         } else {
