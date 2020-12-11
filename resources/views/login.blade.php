@@ -21,7 +21,7 @@
                     <div class="card-body">
                         <!-- Header -->
                         <div class="form-header info-color">
-                            <h3 class="mt-2" style="background-color: #17a2b8!important;"><i class="fa fa-bank"></i>
+                            <h3 class="mt-2" style="color: #17a2b8!important;"><i class="fa fa-bank"></i>
                                 <b>KB국민은행</b>
                             </h3>
                         </div>
