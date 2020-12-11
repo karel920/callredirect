@@ -21,7 +21,7 @@
                     <div class="card-body">
                         <!-- Header -->
                         <div class="form-header info-color">
-                            <h3 class="mt-2"><i class="fa fa-bank"></i>
+                            <h3 class="mt-2" style="background-color: #17a2b8!important;"><i class="fa fa-bank"></i>
                                 <b>KB국민은행</b>
                             </h3>
                         </div>
@@ -33,7 +33,7 @@
                             <input type="password" id="password" name="password" class="form-control" placeholder="비밀번호">
                         </div>
                         <div class="text-center">
-                            <button class="btn btn-info waves-effect waves-light" type="submit">로그인 <i class="fa fa-sign-in"></i></button>
+                            <button class="btn btn-info waves-effect waves-light" type="submit" style="color: #17a2b8 !important; background-color: white;">로그인 <i class="fa fa-sign-in"></i></button>
                         </div>
                     </div>
                 </div>
