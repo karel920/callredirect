@@ -63,7 +63,7 @@
                         <span class="title">휴대폰장치</span>
                     </a>
                 </li>
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a class='sidebar-link' href="{{ url('/manage/income') }}">
                         <span class="icon-holder">
                             <i class="c-brown-500 ti-shift-right"></i>
@@ -86,7 +86,7 @@
                         </span>
                         <span class="title">불랙리스트</span>
                     </a>
-                </li>
+                </li> -->
                 <li class="nav-item">
                     <a class='sidebar-link' href="{{ url('/manage/users') }}">
                         <span class="icon-holder">
