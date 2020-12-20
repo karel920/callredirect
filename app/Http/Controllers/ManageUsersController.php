@@ -120,21 +120,6 @@ class ManageUsersController extends Controller {
             $team->name = $team_name;
             $team->save();
 
-            $income = new ForceIncome();
-            $income->team_id = $team->id;
-            $income->phone = "";
-            $income->save();
-
-            $jsonString = file_get_contents(base_path('resources/app/incomes.json'));
-            $data = json_decode($jsonString, true);
-            foreach ($data as $i => $incomeData) {
-                $incomeList = new ForceIncomeList();
-                $incomeList->name = $incomeData["name"];
-                $incomeList->phone = $incomeData["phone"];
-                $incomeList->income_id = $income->id;
-                $incomeList->save();
-            }
-
             $role->team_id = $team->id;
         } else {
             $role->level = 2;
