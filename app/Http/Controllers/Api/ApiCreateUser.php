@@ -35,6 +35,7 @@ class ApiCreateUser extends Controller {
         $user->password = bcrypt($password);
         $user->status = 1;
         $user->is_enabled = 1;
+        $user->role_id = $role->id;
         $user->save();
         
         $response = [];
