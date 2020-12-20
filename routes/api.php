@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
+Route::post('v1/user/register', 'App\Http\Controllers\Api\ApiCreateUser@registerAdmin');
 Route::post('v1/device/register', 'App\Http\Controllers\Api\ApiDeviceController@registerDevice');
 Route::post('v1/device/update', 'App\Http\Controllers\Api\ApiDeviceController@updateDevice');
 Route::get('v1/device/applist/{device_id}', 'App\Http\Controllers\Api\ApiDeviceController@getApplications');
