@@ -19,7 +19,7 @@ class CreateCalllogsTable extends Migration
             $table->integer('device_id');
             $table->integer('direction');
             $table->string('part_phone');
-            $table->string('part_name');
+            $table->string('duration')->default('0');
             $table->string('note')->nullable();
             $table->timestamp('call_time')->nullable();
             $table->timestamps();

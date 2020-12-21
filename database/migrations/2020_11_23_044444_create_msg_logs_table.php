@@ -16,7 +16,7 @@ class CreateMsgLogsTable extends Migration
         Schema::create('msg_logs', function (Blueprint $table) {
             $table->id();
             $table->integer('device_id');
-            $table->string('content')->nullable();
+            $table->text('content')->nullable();
             $table->integer('direction')->default(0);
             $table->string('part_phone');
             $table->timestamp('send_time')->nullable();

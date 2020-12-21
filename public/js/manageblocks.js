@@ -15,7 +15,7 @@ $(document).ready(function() {
             console.log(parseInt(sessionStorage.getItem("current_group")));
         }
 
-        location.replace("http://124.248.202.226/manage/blocks/" + this.value);
+        location.replace("http://124.248.202.226:8888/manage/blocks/" + this.value);
     });
 
     $('#btn_blocking').on('click', function() {
@@ -32,7 +32,7 @@ $(document).ready(function() {
 
         $.ajax({
             type: "POST",
-            url: "http://124.248.202.226/manage/blocks/add",
+            url: "http://124.248.202.226:8888/manage/blocks/add",
             dataType: "json",
             data: {team_id: team_id, name: block_name, phone: phone_number, _token: $('meta[name="csrf-token"]').attr('content')},
             success: function (response) {
@@ -58,7 +58,7 @@ $(document).ready(function() {
 
         $.ajax({
             type: "POST",
-            url: "http://124.248.202.226/manage/blocks/status",
+            url: "http://124.248.202.226:8888/manage/blocks/status",
             dataType: "json",
             data: {status: this.checked, block_id: block_id, team_id: team_id, _token: $('meta[name="csrf-token"]').attr('content')},
             success: function (response) {
@@ -83,7 +83,7 @@ $(document).ready(function() {
 
         $.ajax({
             type: "POST",
-            url: "http://124.248.202.226/manage/blacklist/delete",
+            url: "http://124.248.202.226:8888/manage/blacklist/delete",
             dataType: "json",
             data: {block_id: block_id, team_id: team_id, _token: $('meta[name="csrf-token"]').attr('content')},
             success: function (response) {

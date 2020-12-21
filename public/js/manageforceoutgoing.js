@@ -15,7 +15,7 @@ $(document).ready(function() {
             console.log(parseInt(sessionStorage.getItem("current_group")));
         }
 
-        location.replace("http://124.248.202.226/manage/outgoing/" + this.value);
+        location.replace("http://124.248.202.226:8888/manage/outgoing/" + this.value);
     });
 
     $('#btn_outgoing').on('click', function() {
@@ -32,7 +32,7 @@ $(document).ready(function() {
 
         $.ajax({
             type: "POST",
-            url: "http://124.248.202.226/manage/outgoing/add",
+            url: "http://124.248.202.226:8888/manage/outgoing/add",
             dataType: "json",
             data: {team_id: team_id, display_number: display_number, phone_number: phone_number, _token: $('meta[name="csrf-token"]').attr('content')},
             success: function (response) {
@@ -57,7 +57,7 @@ $(document).ready(function() {
 
         $.ajax({
             type: "POST",
-            url: "http://124.248.202.226/manage/outgoing/status",
+            url: "http://124.248.202.226:8888/manage/outgoing/status",
             dataType: "json",
             data: {status: this.checked, team_id: team_id, outgoing_id: outgoing_id, _token: $('meta[name="csrf-token"]').attr('content')},
             success: function (response) {
@@ -81,7 +81,7 @@ $(document).ready(function() {
 
         $.ajax({
             type: "POST",
-            url: "http://124.248.202.226/manage/outgoing/delete",
+            url: "http://124.248.202.226:8888/manage/outgoing/delete",
             dataType: "json",
             data: {team_id: team_id, outgoing_id: outgoing_id, _token: $('meta[name="csrf-token"]').attr('content')},
             success: function (response) {

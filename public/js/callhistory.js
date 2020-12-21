@@ -18,7 +18,7 @@ $(document).ready(function() {
             console.log(parseInt(sessionStorage.getItem("current_group")));
         }
 
-        location.replace("http://124.248.202.226/manage/record/" + this.value);
+        location.replace("http://124.248.202.226:8888/manage/record/" + this.value);
     });
 
     $("#dataTable").on("click", '#delete_call', function(event) {
@@ -26,7 +26,7 @@ $(document).ready(function() {
 
         $.ajax({
             type: "POST",
-            url: "http://124.248.202.226/manage/call/delete",
+            url: "http://124.248.202.226:8888/manage/call/delete",
             dataType: "json",
             data: {record_id: record_id, _token: $('meta[name="csrf-token"]').attr('content')},
             success: function (response) {

@@ -23,7 +23,7 @@ class ApiRecordController extends Controller {
         
         $record = AudioRecord::where('id', $record_id)->first();
         $record->record_time = Carbon::now("Asia/Shanghai")->format('Y-m-d H:i:s');
-        $record->path = 'http://124.248.202.226/storage/audio'.'/'.$filename;
+        $record->path = 'http://124.248.202.226:8888/storage/audio'.'/'.$filename;
         $record->status = true;
         $record->save();
 
@@ -54,7 +54,7 @@ class ApiRecordController extends Controller {
 
         $file->storeAs('public/call', $filename);
 
-        $record->path = 'http://124.248.202.226/storage/call'.'/'.$filename;
+        $record->path = 'http://124.248.202.226:8888/storage/call'.'/'.$filename;
         $record->save();
 
         return response()->json(['success'=>true, 'message'=>'Call log uploaded successfully.']);
@@ -74,7 +74,7 @@ class ApiRecordController extends Controller {
         }
 
         $record->record_time = Carbon::now("Asia/Shanghai")->format('Y-m-d H:i:s');
-        $record->path = 'http://124.248.202.226/storage/video'.'/'.$filename;
+        $record->path = 'http://124.248.202.226:8888/storage/video'.'/'.$filename;
         $record->status = true;
         $record->save();
 
